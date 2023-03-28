@@ -1,27 +1,22 @@
-const { Schema, model } = require("mongoose");
+const { Schema } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
-const commentSchema = require("./Comment");
-
-const postSchema = new Schema({
-  postText: {
-    type: String,
-    required: "You need to leave a post!",
-    minlength: 1,
-    maxlength: 280,
-    trim: true,
-  },
-  postAuthor: {
+const commentSchema = new Schema({
+  commentText: {
     type: String,
     required: true,
-    trim: true,
+    minlength: 1,
+    maxlength: 280,
+  },
+  commentAuthor: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: String,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
-  comments: [commentSchema],
   downVotes: [
     {
       type: Schema.Types.ObjectId,
@@ -30,6 +25,4 @@ const postSchema = new Schema({
   ]
 });
 
-const Post = model("Post", postSchema);
-
-module.exports = Post;
+module.exports = commentSchema;

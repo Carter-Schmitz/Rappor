@@ -1,0 +1,31 @@
+[
+  {
+    "postText": "Hello World",
+    "postAuthor": "Bunny",
+    "createdAt": "Mar-4-1994",
+    "comments": [
+      {
+        "commentText": "This is a comment to test on a Post. Hopefully this will all work correctly.",
+        "commentAuthor": "Bunny",
+        "createdAt": "Mar-4-1994"
+      },
+      {
+        "commentText": "This is a a different message so that the tests can be made to check for page sizing of comments. These are really cool.",
+        "commentAuthor": "Bunny",
+        "createdAt": "Mar-4-1994"
+      }
+    ]
+  },
+  {
+    "postText": "This is another text to test with. This one is going to be a bit longer because I need to take up space. Yay!",
+    "postAuthor": "Bunny",
+    "createdAt": "Mar-4-1994",
+    "comments": [
+      {
+        "commentText": "Well here we are again. Testing another comment on a Post. I think this is a pretty neat project.",
+        "commentAuthor": "Bunny",
+        "createdAt": "Mar-4-1994"
+      }
+    ]
+  }
+]
