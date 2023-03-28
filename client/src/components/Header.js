@@ -1,11 +1,13 @@
 import React from "react";
-import { FaUser } from 'react-icons/fa';
+import { FaUser } from "react-icons/fa";
 
 const Header = () => {
   return (
     <div>
-          <h1>Rappor</h1>
-          <FaUser />
+      <h1>Rappor</h1>
+      <button>
+        <FaUser />
+      </button>
     </div>
   );
 };
