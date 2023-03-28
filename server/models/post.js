@@ -22,6 +22,12 @@ const postSchema = new Schema({
     get: (timestamp) => dateFormat(timestamp),
   },
   comments: [commentSchema],
+  downVotes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ]
 });
 
 const Post = model("Post", postSchema);
