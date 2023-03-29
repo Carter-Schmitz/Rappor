@@ -17,7 +17,7 @@ const postSchema = new Schema({
     trim: true,
   },
   createdAt: {
-    type: String,
+    type: Number,
     default: Date.now,
     get: (timestamp) => dateFormat(timestamp),
   },
