@@ -1,4 +1,5 @@
 import React from "react";
+
 import ParentContainer from "./components/parentContainer";
 import {
   ApolloClient,
@@ -7,6 +8,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -33,11 +35,13 @@ const client = new ApolloClient({
 
 function App() {
   return (
+    <ChakraProvider>
     <ApolloProvider client={client}>
     <div className="container">
       <ParentContainer />
     </div>
     </ApolloProvider>
+    </ChakraProvider>
   );
 }
 
