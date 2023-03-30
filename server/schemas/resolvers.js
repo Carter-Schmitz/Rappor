@@ -73,29 +73,60 @@ const resolvers = {
       addFriend: async (parent, {pendingId}, context) => {
         // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
         if (context.user) {
-          //friend that sent request having current user added to their friend list
-          const pendingFriend = await User.findOneAndUpdate(
-            { _id:pendingId },
-            {
-              $addToSet: { friends: {friendId: context.user._id, friendUsername: context.user.username}  },
-            },
-            {
-              new: true,
-              runValidators: true,
-            }
-          );
+          //check for users friends to see if either of them already match
+          const pendingCheckUser = await User.findOne({_id: context.user._id})
+          const pendingCheckReq = await User.findOne({_id: pendingId})
+
+          if (pendingCheckUser == null || pendingCheckReq == null) {
+            return Error("User not found")
+          }
+
             //current user setting the accepted request to a friend and removing the pending request
-          return User.findOneAndUpdate(
-            { _id: context.user._id },
-            {
-              $addToSet: {friends: {friendId: pendingId, friendUsername: pendingFriend.username}},
-              $pull: {pendingFriends: {pendingId: {$eq: pendingId}}}
-            },
-            {
-              new: true,
-              runValidators: true,
-            }
-          );
+          const updateUsersFriends = async () => {
+            const user = await User.findOneAndUpdate(
+              { _id: context.user._id },
+              {
+                $addToSet: {friends: {friendId: pendingId, friendUsername: pendingCheckReq.username}},
+                $pull: {pendingFriends: {pendingId: {$eq: pendingId}}}
+              },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+          }
+
+          const updateReqFriends = async () => {
+            //friend that sent request having current user added to their friend list
+            const pendingFriend = await User.findOneAndUpdate(
+              { _id:pendingId },
+              {
+                $addToSet: { friends: {friendId: context.user._id, friendUsername: context.user.username}  },
+              },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+          }
+
+          //check if request is already a friend
+          if (pendingCheckReq.friends.length) {
+          const checkReq = pendingCheckReq.friends.some(request => request.friendId === context.user._id) 
+          checkReq ? console.log("Req is already friends with User") : await updateReqFriends();
+          } else {
+            updateReqFriends()
+          }
+         
+          //check if current user is already a friend of requesting user
+          if (pendingCheckUser.friends.length) {
+            const checkUser = pendingCheckUser.friends.some(request => request.friendId === pendingId) 
+            checkUser ? console.log("User is already friends with Req") : await updateUsersFriends();
+          } else {
+            updateUsersFriends()
+          }
+
+          return User.findOne({_id: context.user._id}).populate('posts');
         }
         // If user attempts to execute this mutation and isn't logged in, throw an error
         throw new AuthenticationError('You need to be logged in!');
