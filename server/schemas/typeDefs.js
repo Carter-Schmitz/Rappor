@@ -6,7 +6,19 @@ const typeDefs = gql`
     username: String
     email: String
     posts: [Post]
-    friends: [User]
+    friends: [Friend]
+    pendingFriends: [PendingFriend]
+  }
+
+  type Friend {
+    friendId: String
+    friendUsername: String
+    topTenRank: String
+  }
+
+  type PendingFriend {
+    pendingUsername: String
+    pendingId: String
   }
 
   type Post {
@@ -34,11 +46,15 @@ const typeDefs = gql`
   type Query {
     users: [User]
     posts: [Post]
+    userByUsername(username:String): User
+    userById(id:String): User
   }
 
   type Mutation {
     loginUser(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
+    addFriend(pendingId: String): User
+    addPending(username: String): User
   }
 `;
 
