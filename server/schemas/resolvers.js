@@ -43,9 +43,34 @@ const resolvers = {
   
         return { token, user };
       },
+      //mutation for addin current user to another users pending users array
+      addPending: async (parent, {username}, context) => {
+        if (context.user) {
+          const pendingCheck = await User.findOne({username: username})
+          
+          const updateUser = async () => {
+            const pendingFriend = await User.findOneAndUpdate(
+              { username: username },
+              {
+                $addToSet: { pendingFriends: {pendingUsername: context.user.username, pendingId: context.user._id}  },
+              },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+          }
+
+          //check if user is already pending
+          const check = pendingCheck.pendingFriends.some(request => request.pendingId === context.user._id) 
+
+          check ? console.log("Already Pending") : updateUser();
+
+          return User.findOne({_id: context.user._id}).populate('posts');
+        }
+      },
       //add friend mutation to be called after pending friend is accepted
       addFriend: async (parent, {pendingId}, context) => {
-        console.log(pendingId)
         // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
         if (context.user) {
           //friend that sent request having current user added to their friend list
@@ -59,11 +84,12 @@ const resolvers = {
               runValidators: true,
             }
           );
-
+            //current user setting the accepted request to a friend and removing the pending request
           return User.findOneAndUpdate(
             { _id: context.user._id },
             {
               $addToSet: {friends: {friendId: pendingId, friendUsername: pendingFriend.username}},
+              $pull: {pendingFriends: {pendingId: {$eq: pendingId}}}
             },
             {
               new: true,
