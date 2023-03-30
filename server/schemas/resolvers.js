@@ -7,6 +7,9 @@ const resolvers = {
       users: async () => {
         return User.find().populate('posts');
       },
+      userByUsername: async (parent, { username }) => {
+        return User.findOne({username: username}).populate('posts');
+      },
       posts: async () => {
         return Post.find();
       },
@@ -53,7 +56,7 @@ const resolvers = {
               runValidators: true,
             }
           );
-          
+
           return User.findOneAndUpdate(
             { _id: context.user._id },
             {
