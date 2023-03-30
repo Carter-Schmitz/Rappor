@@ -39,12 +39,22 @@ function NavTabs({ currentPage, handlePageChange }) {
       </li>
       <li className="nav-item">
         <a
-          href="#login/signup"
-          onClick={() => handlePageChange('login/signup')}
-          // Check to see if the currentPage is `login/signup`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-          className={currentPage === 'login/signup' ? 'nav-link active' : 'nav-link'}
+          href="#login"
+          onClick={() => handlePageChange('login')}
+          // Check to see if the currentPage is `login`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'login' ? 'nav-link active' : 'nav-link'}
         >
-          login/signup
+          login
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          href="#signup"
+          onClick={() => handlePageChange('Signup')}
+          // Check to see if the currentPage is `signup`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'Signup' ? 'nav-link active' : 'nav-link'}
+        >
+          Signup
         </a>
       </li>
     </ul>

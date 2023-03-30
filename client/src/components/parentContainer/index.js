@@ -7,6 +7,7 @@ import Feed from "../../pages/Feed";
 import Profile from "../../pages/Profile";
 import Login from "../../pages/Login";
 import Messages from "../../pages/Messages";
+import Signup from "../../pages/Signup";
 // // import Foot from "../pages/Footer";
 import { QUERY_POSTS } from '../../utils/queries';
 
@@ -26,6 +27,9 @@ const ParentContainer = () => {
     if (currentPage === "Messages") {
       return <Messages />;
     }
+    if (currentPage === "Signup") {
+        return <Signup />;
+      }
     return <Login />;
   };
 
