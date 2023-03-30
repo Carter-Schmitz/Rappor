@@ -10,6 +10,9 @@ const resolvers = {
       userByUsername: async (parent, { username }) => {
         return User.findOne({username: username}).populate('posts');
       },
+      userById: async (parent, { id }) => {
+        return User.findOne({_id: id}).populate('posts');
+      },
       posts: async () => {
         return Post.find();
       },
