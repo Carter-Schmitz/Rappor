@@ -1,5 +1,4 @@
 import React from "react";
-
 import ParentContainer from "./components/parentContainer";
 import {
   ApolloClient,

@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { useQuery } from '@apollo/client';
+import { useQuery } from "@apollo/client";
+import { Box } from "@chakra-ui/react";
 
-import Header from "../Header"
-import NavTabs from "../../components/NavTabs";
+import Header from "../Header";
+import NavTabs from "../NavTabs";
 import Feed from "../../pages/Feed";
 import Profile from "../../pages/Profile";
 import Login from "../../pages/Login";
 import Messages from "../../pages/Messages";
 // // import Foot from "../pages/Footer";
-import { QUERY_POSTS } from '../../utils/queries';
+import { QUERY_POSTS } from "../../utils/queries";
 
 const ParentContainer = () => {
   const [currentPage, setCurrentPage] = useState("Profile");
-//   const { loading, data } = useQuery(QUERY_POSTS);
-//   const posts = data?.posts || [];
+  //   const { loading, data } = useQuery(QUERY_POSTS);
+  //   const posts = data?.posts || [];
 
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
   const renderPage = () => {
@@ -32,17 +33,15 @@ const ParentContainer = () => {
   const handlePageChange = (page) => setCurrentPage(page);
 
   return (
-    <div>
+    <Box bg="grey">
       <Header />
       {/* Here we are calling the renderPage method which will return a component  */}
       {renderPage()}
       {/* We are passing the currentPage from state and the function to update it */}
       <NavTabs currentPage={currentPage} handlePageChange={handlePageChange} />
       {/* <Foot /> */}
-      
-    </div>
-    
+    </Box>
   );
-}
+};
 
-export default ParentContainer
+export default ParentContainer;
