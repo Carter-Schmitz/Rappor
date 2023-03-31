@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from '@apollo/client';
 
 import Header from "../Header"
-import NavTabs from "../../components/NavTabs";
+import NavTabs from "../NavTabs";
 import Feed from "../../pages/Feed";
 import Profile from "../../pages/Profile";
 import Login from "../../pages/Login";
