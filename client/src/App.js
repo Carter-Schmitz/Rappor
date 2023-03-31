@@ -34,13 +34,13 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ChakraProvider>
     <ApolloProvider client={client}>
+      <ChakraProvider>
     <div className="container">
       <ParentContainer />
     </div>
-    </ApolloProvider>
     </ChakraProvider>
+    </ApolloProvider>
   );
 }
 

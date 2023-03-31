@@ -14,6 +14,7 @@ import {
 // We assign them to their own variable names
 function NavTabs({ currentPage, handlePageChange }) {
   return (
+
     <Flex
       display="flexWrap"
       mt={1000}
@@ -86,6 +87,7 @@ function NavTabs({ currentPage, handlePageChange }) {
         </HStack>
       </List>
     </Flex>
+
   );
 }
 
