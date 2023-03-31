@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import { Box, Flex } from "@chakra-ui/react";
 
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -21,38 +22,36 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("This is for mutation",formState);
+    console.log("This is for mutation", formState);
     try {
       const { data } = await login({
-
-        variables: { ...formState},
+        variables: { ...formState },
       });
-      console.log(data)
+      console.log(data);
       Auth.loginUser(data.login.token);
-
     } catch (e) {
       console.error(e);
     }
 
     // clear form values
     setFormState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <Flex
+      className="flex-row justify-center mb-4"
+      justifyContent="center"
+      mt="200"
+    >
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
           <div className="card-body">
             {data ? (
-              <p>
-
-                Success! You may now head to homepage
-
-              </p>
+              <p>Success! You may now head to homepage</p>
             ) : (
               <form onSubmit={handleFormSubmit}>
                 <input
@@ -73,7 +72,7 @@ const Login = (props) => {
                 />
                 <button
                   className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                   type="submit"
                 >
                   Submit
@@ -89,7 +88,7 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </main>
+    </Flex>
   );
 };
 
