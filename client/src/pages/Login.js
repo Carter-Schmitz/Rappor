@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
@@ -25,10 +24,10 @@ const Login = (props) => {
     console.log(formState);
     try {
       const { data } = await login({
-        variables: { ...formState },
+        variables: { ...formState},
       });
-
-      Auth.login(data.login.token);
+      console.log(data)
+      Auth.loginUser(data.login.token);
     } catch (e) {
       console.error(e);
     }
@@ -48,8 +47,7 @@ const Login = (props) => {
           <div className="card-body">
             {data ? (
               <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
+                Success! You may now head back to your feed!
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>

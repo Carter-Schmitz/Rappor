@@ -31,6 +31,7 @@ const PostForm = () => {
         query: QUERY_ME,
         data: { me: { ...me, Posts: [...me.Posts, addPost] } },
       });
+
     },
   });
 
