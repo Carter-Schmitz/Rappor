@@ -21,13 +21,15 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
+    console.log("This is for mutation",formState);
     try {
       const { data } = await login({
+
         variables: { ...formState},
       });
       console.log(data)
       Auth.loginUser(data.login.token);
+
     } catch (e) {
       console.error(e);
     }
@@ -47,7 +49,9 @@ const Login = (props) => {
           <div className="card-body">
             {data ? (
               <p>
-                Success! You may now head back to your feed!
+
+                Success! You may now head to homepage
+
               </p>
             ) : (
               <form onSubmit={handleFormSubmit}>
