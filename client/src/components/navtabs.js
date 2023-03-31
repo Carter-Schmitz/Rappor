@@ -1,12 +1,33 @@
-import React from 'react';
+import React from "react";
+import { FaHome, FaEnvelope } from "react-icons/fa";
+import {
+  Box,
+  HStack,
+  List,
+  ListItem,
+  Flex,
+  Divider,
+  Button,
+} from "@chakra-ui/react";
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
 function NavTabs({ currentPage, handlePageChange }) {
   return (
-    <div>
-    <h1 className='header'> Rappor</h1>
-    <ul className="nav nav-tabs">
+
+    <Flex
+      display="flexWrap"
+      mt={1000}
+      mb={70}
+      background="grey"
+      color="red.600"
+    >
+      <List pos="sticky" className="nav nav-tabs">
+        <HStack justify="space-between">
+          <ListItem
+            className="nav-item"
+            _hover={{ color: "purple.600", transition: "80ms" }}
+          >
       <li className="nav-item">
         <a
           href="/profile"
@@ -55,8 +76,12 @@ function NavTabs({ currentPage, handlePageChange }) {
           Signup
         </a>
       </li>
+      </HStack>
+      </List>
+    </Flex>
     </ul>
     </div>
+
   );
 }
 
