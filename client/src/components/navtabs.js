@@ -28,65 +28,59 @@ function NavTabs({ currentPage, handlePageChange }) {
             className="nav-item"
             _hover={{ color: "purple.600", transition: "80ms" }}
           >
-            <a
-              href="#profile"
-              onClick={() => handlePageChange("Profile")}
-              // Check to see if the currentPage is `profile`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Profile" ? "nav-link active" : "nav-link"
-              }
-            >
-              Profile
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="#feed"
-              onClick={() => handlePageChange("Feed")}
-              // Check to see if the currentPage is `Feed`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Feed" ? "nav-link active" : "nav-link"
-              }
-            >
-              <FaHome />
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="#messages"
-              onClick={() => handlePageChange("Messages")}
-              // Check to see if the currentPage is `messages`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Messages" ? "nav-link active" : "nav-link"
-              }
-            >
-              <FaEnvelope />
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="#login/signup"
-              onClick={() => handlePageChange("login/signup")}
-              // Check to see if the currentPage is `login/signup`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "login/signup" ? "nav-link active" : "nav-link"
-              }
-            >
-              login/signup
-            </a>
-          </ListItem>
-        </HStack>
+      <li className="nav-item">
+        <a
+          href="/profile"
+          // Check to see if the currentPage is `profile`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'Profile' ? 'nav-link active' : 'nav-link'}
+        >
+          Profile
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          href="/feed"
+          // Check to see if the currentPage is `Feed`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'Feed' ? 'nav-link active' : 'nav-link'}
+        >
+          Feed
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          href="#messages"
+          onClick={() => handlePageChange('Messages')}
+          // Check to see if the currentPage is `messages`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'Messages' ? 'nav-link active' : 'nav-link'}
+        >
+          Messages
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          href="#login"
+          onClick={() => handlePageChange('login')}
+          // Check to see if the currentPage is `login`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'login' ? 'nav-link active' : 'nav-link'}
+        >
+          login
+        </a>
+      </li>
+      <li className="nav-item">
+        <a
+          href="#signup"
+          onClick={() => handlePageChange('Signup')}
+          // Check to see if the currentPage is `signup`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+          className={currentPage === 'Signup' ? 'nav-link active' : 'nav-link'}
+        >
+          Signup
+        </a>
+      </li>
+      </HStack>
       </List>
     </Flex>
+    </ul>
+    </div>
 
   );
 }

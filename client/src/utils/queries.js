@@ -49,7 +49,7 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      Posts {
+      posts {
         _id
         postText
         postAuthor
