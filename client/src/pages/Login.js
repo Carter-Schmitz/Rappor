@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import { Box, Flex } from '@chakra-ui/react';
 
 import Auth from '../utils/auth';
 
@@ -42,7 +43,7 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <Flex className="flex-row justify-center mb-4" justifyContent="center" mt="200">
       <div className="col-12 col-lg-10">
         <div className="card">
           <h4 className="card-header bg-dark text-light p-2">Login</h4>
@@ -89,7 +90,7 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </main>
+    </Flex>
   );
 };
 

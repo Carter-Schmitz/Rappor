@@ -45,22 +45,22 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-          <NavTabs />
-      <Router>
-        <>
-          <Routes>
-            <Route path="/" element={<Login/>} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="*"
-              element={<h1 className="display-2">Wrong page!</h1>}
-            />
-          </Routes>
-        </>
-      </Router>
-    </ChakraProvider>
+        <Router>
+          <>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="*"
+                element={<h1 className="display-2">Wrong page!</h1>}
+              />
+            </Routes>
+          </>
+        </Router>
+        <NavTabs />
+      </ChakraProvider>
     </ApolloProvider>
   );
 }
