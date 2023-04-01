@@ -138,7 +138,6 @@ const resolvers = {
 
       addPost: async (parent, { postText }, context) => {
         if (context.user) {
-          console.log(context.user)
           return User.findOneAndUpdate(
               { _id: context.user._id },
               {
@@ -155,7 +154,6 @@ const resolvers = {
       },
       removePost: async (parent, { postId }, context) => {
         if (context.user) {
-          console.log(context.user)
           return User.findOneAndUpdate(
               { _id: context.user._id },
               {
@@ -166,6 +164,26 @@ const resolvers = {
                 runValidators: true,
               }
             );
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
+      addComment: async (parent, { username, postId, commentText }, context) => {
+        if (context.user) {
+          return User.findOneAndUpdate(
+              { username: username},
+              {
+                $addToSet: { "posts.$[elem].comments": {commentText: commentText, commentAuthor: context.user.username}}
+              },
+              {
+                arrayFilters: [{ "elem._id": postId}],
+                new: true,
+                runValidators: true,
+              }
+            );
+
+
         }
 
         throw new AuthenticationError('You need to be logged in!');
