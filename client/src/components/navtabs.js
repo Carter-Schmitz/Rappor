@@ -40,7 +40,7 @@ function NavTabs() {
                   <Link className="Nav__link" to="/signup">Signup</Link>
                 </li>
                 <li className="Nav__item">
-                  <Link className="Nav__link" to="/messages">Messages</Link>
+                  <Link className="Nav__link" to="/friendslist">FriendsList</Link>
                 </li>
               </ul>
             </div>

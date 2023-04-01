@@ -15,7 +15,7 @@ import NavTabs from "./components/navtabs";
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
-import Messages from "./pages/Messages";
+import FriendsList from "./pages/FriendsList";
 import Signup from "./pages/Signup";
 
 const httpLink = createHttpLink({
@@ -51,7 +51,7 @@ function App() {
             <Route path="/" element={<Login/>} />
             <Route path="/feed" element={<Feed/>} />
             <Route path="/me" element={<Profile />} />
-            <Route path="/messages" element={<Messages />} />
+            <Route path="/friendslist" element={<FriendsList />} />
             <Route path="/signup" element={<Signup />} />
             <Route
               path="*"

@@ -2,6 +2,7 @@ const db = require('../config/connection');
 const { User } = require('../models');
 const postSeeds = require('./postSeeds.json');
 const userSeeds = require('./userSeeds.json');
+const friendSeeds = require('./friendSeeds.json');
 
 db.once('open', async () => {
   try {
@@ -22,6 +23,14 @@ db.once('open', async () => {
                 comments: postSeeds[i].comments
               },
             },
+          },
+          {
+            $addToSet:{
+              friends: {
+                friendUsername: friendSeeds[i].friendUsername,
+                topTenRank: friendSeeds[i].topTenRank
+              }
+            }
           }
         );
       }

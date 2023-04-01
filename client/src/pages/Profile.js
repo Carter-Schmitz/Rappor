@@ -12,6 +12,7 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { List, ListItem } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
+import TopTen from '../components/topTen';
 
 const Profile = () => {
   const { username: userParam } = useParams();
@@ -47,7 +48,7 @@ const Profile = () => {
           Viewing {data?.me?.username ? `${data?.me?.username}'s` : 'your'} profile.
         </h2>
         <div className='topTen'>
-          <List>
+          {/* <List>
             <ListItem> {user.friends.topTenRank(1)} </ListItem>
             <ListItem> {user.friends.topTenRank(2)} </ListItem>
             <ListItem> {user.friends.topTenRank(3)} </ListItem>
@@ -58,7 +59,8 @@ const Profile = () => {
             <ListItem> {user.friends[7]} </ListItem>
             <ListItem> {user.friends[8]} </ListItem>
             <ListItem> {user.friends[9]} </ListItem>
-          </List>
+          </List> */}
+          
         </div>
         <div className="col-12 col-md-10 mb-5">
 
