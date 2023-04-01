@@ -15,19 +15,21 @@ const Profile = () => {
   const { username: userParam } = useParams();
 
   const { loading, data } = useQuery(QUERY_ME);
-  console.log("query me data",data)
+  //console.log("this is Auth",data?.me?.posts) 
 
-  const user = data?.me || data?.user || {};
+
+  const user = data?.user || {};
+  //console.log(user)
   // navigate to personal profile page if username is yours
-      if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-    return <Navigate to="/me" />;
+      if (!Auth.loggedIn() && !Auth.getProfile().data.username === data?.me?.username) {
+    return <Navigate to="/feed" />; 
   }
  
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!user?.username) {
+  if (!data?.me?.username) {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
@@ -40,15 +42,15 @@ const Profile = () => {
     <div>
       <div className="flex-row justify-center mb-3">
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
+          Viewing {data?.me?.username ? `${data?.me?.username}'s` : 'your'} profile.
         </h2>
 
         <div className="col-12 col-md-10 mb-5">
 
           <PostList
 
-            posts={user.posts}
-            title={`${user.username}'s Posts...`}
+            posts={data?.me?.posts}
+            title={`${data?.me?.username}'s Posts...`}
             showTitle={false}
             showUsername={false}
           />
