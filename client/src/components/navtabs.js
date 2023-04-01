@@ -25,7 +25,7 @@ function NavTabs() {
               <img src="logo.svg" className="Nav__logo" />
             </Link>
 
-            <div className="Nav__right">
+            <div className="Nav__bottom">
               <ul className="Nav__item-wrapper">
                 <li className="Nav__item">
                   <Link className="Nav__link" to="/me">Profile</Link>
