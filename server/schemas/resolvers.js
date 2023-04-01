@@ -17,9 +17,37 @@ const resolvers = {
       userById: async (parent, { id }) => {
         return User.findOne({_id: id});
       },
-      posts: async () => {
-        return Post.find();
-      },
+      friendsPosts: async (parent, args, context) => {
+        const user = await User.findOne({_id: context.user._id})
+
+        let allPosts = [];
+
+        const data = Promise.all(
+            user.friends.map(async (friend) => {
+            const id = friend.friendId;
+            const friendData = await User.findOne({_id: id})
+            const friendPosts = friendData.posts;
+            allPosts = [...allPosts, ...friendPosts]
+            }
+          )
+        )
+
+        return Promise.resolve(data).then(() => {
+          console.log("Before",allPosts)
+
+          allPosts.sort(function(a, b) {
+            let keyA = (a.timeSort);
+            let keyB = (b.timeSort);
+            // Compare the 2 dates
+            if (keyA < keyB) return -1;
+            if (keyA > keyB) return 1;
+            return 0;
+          });
+
+          console.log("After",allPosts)
+          return allPosts
+        })
+      }
     },
 
     Mutation: {
