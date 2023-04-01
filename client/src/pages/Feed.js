@@ -1,18 +1,34 @@
 import React, {useState} from "react";
-import { useMutation } from "@apollo/client";
+import { Navigate } from 'react-router-dom';
+import { useMutation, useQuery } from "@apollo/client";
 import { Box, Heading, HStack, Button, Textarea } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
-import { useForm } from "react-hook-form";
 import PostList from "../components/PostList/PostList";
-
+import { useForm } from "react-hook-form";
+import { QUERY_FRIENDS_POSTS } from '../utils/queries';
 import { ADD_POST } from "../utils/mutations";
+import Auth from '../utils/auth';
 
 const Feed = () => {
   const [PostText, setPostText] = useState('');
 
   const [characterCount, setCharacterCount] = useState(0);
-
   const [addPost, { error }] = useMutation(ADD_POST);
+  const { loading, data } = useQuery(QUERY_FRIENDS_POSTS);
+  console.log("this is Auth",data) 
+
+
+  const user = data?.user || {};
+  //console.log(user)
+  // navigate to personal profile page if username is yours
+      if (!Auth.loggedIn() && !Auth.getProfile().data.username === data?.me?.username) {
+    return <Navigate to="/feed" />; 
+  }
+ 
+  if (loading) {
+    return <div>Loading...</div>;
+  } ;
+
   if (error) {
     return (error)
   }
@@ -64,7 +80,11 @@ const Feed = () => {
           onChange={handleChange}
         />
       </form>
-      <PostList />
+      <PostList
+      posts={data?.me?.posts}
+      title={`${data?.me?.username}'s Posts...`}
+      showTitle={false}
+      showUsername={false} />
     </Box>
   );
 };
