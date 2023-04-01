@@ -57,6 +57,7 @@ const typeDefs = gql`
     addFriend(pendingId: String): User
     addPending(username: String): User
     addPost(postText: String): User
+    removePost(postId: String): User
   }
 `;
 
