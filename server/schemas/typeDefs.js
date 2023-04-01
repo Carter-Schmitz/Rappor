@@ -58,7 +58,7 @@ const typeDefs = gql`
     addPending(username: String): User
     addPost(postText: String): User
     removePost(postId: String): User
-    addComment(username: String, postId: String, commentText: String): User
+    addComment(postId: String, commentText: String): User
   }
 `;
 
