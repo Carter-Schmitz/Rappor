@@ -5,7 +5,7 @@ import { Box, Card, CardHeader, Flex, Avatar, Heading, CardBody, CardFooter, Ico
 import { Link } from 'react-router-dom';
 
 const PostList = ({ posts, title }) => {
-    if (!posts.length) {
+    if (posts) {
         return <h3>Nothing to see here...</h3>
     }
 

@@ -25,10 +25,10 @@ const Login = (props) => {
     try {
       const { data } = await login({
 
-        variables: { ...formState},
+        variables: { email:formState.email, password:formState.password},
       });
       console.log(data)
-      Auth.loginUser(data.login.token);
+      Auth.login(data.loginUser.token);
 
     } catch (e) {
       console.error(e);

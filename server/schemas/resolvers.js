@@ -5,6 +5,7 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
     Query: {
       me: async (parent, args, context) => {
+        console.log(context)
         return User.find({_id: context.user._id}).populate('posts');
       },
       users: async () => {

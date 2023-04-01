@@ -12,6 +12,8 @@ const Feed = () => {
   const { loading, data } = useQuery(QUERY_POSTS);
   const posts = data?.posts || [];
 
+  console.log(posts) 
+
   function handlePost(data) {
     console.log(data);
     reset();
