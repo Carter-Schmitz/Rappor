@@ -28,12 +28,25 @@ export const ADD_POST = gql`
   mutation addPost($postText: String!) {
     addPost(postText: $postText) {
       _id
-      postText
-      postAuthor
-      createdAt
-      comments {
+      username
+      posts {
         _id
-        commentText
+        postText
+        postAuthor
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+          downVotes {
+            _id
+            username
+          }
+        }
+        createdAt
+        downVotes {
+          _id
+        }
       }
     }
   }
