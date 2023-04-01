@@ -1,27 +1,50 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
+import React, {useState} from "react";
+import { useMutation } from "@apollo/client";
 import { Box, Heading, HStack, Button, Textarea } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useForm } from "react-hook-form";
 import PostList from "../components/PostList/PostList";
 
-import { QUERY_POSTS } from "../utils/queries";
+import { ADD_POST } from "../utils/mutations";
 
 const Feed = () => {
-  const { register, handleSubmit, reset } = useForm();
-  const { loading, data } = useQuery(QUERY_POSTS);
-  const posts = data?.posts || [];
+  const [PostText, setPostText] = useState('');
 
-  console.log(posts) 
+  const [characterCount, setCharacterCount] = useState(0);
 
-  function handlePost(data) {
-    console.log(data);
-    reset();
+  const [addPost, { error }] = useMutation(ADD_POST);
+  if (error) {
+    return (error)
+  }
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(PostText)
+    try {
+      const { data } = await addPost({
+        variables: {
+          postText: PostText
+        },
+      });
+
+      setPostText('');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'PostText' && value.length <= 280) {
+      setPostText(value);
+      setCharacterCount(value.length);
+    }
   }
 
   return (
     <Box maxW="600px" mx="auto" py="10">
-      <form onSubmit={handleSubmit(handlePost)}>
+      <form onSubmit={handleFormSubmit}>
         <HStack justify="space-between">
           <Heading size="lg">Start a Rappor</Heading>
           <Button colorScheme="red" type="submit">
@@ -30,12 +53,15 @@ const Feed = () => {
         </HStack>
         <Textarea
           as={TextareaAutosize}
+          name="PostText"
           resize="none"
           mt="5"
+          inputMode="text"
+          value={PostText}
           borderColor="purple"
           placeholder="Create a new Rappor..."
           minRows={3}
-          {...register("text", { required: true })}
+          onChange={handleChange}
         />
       </form>
       <PostList />
