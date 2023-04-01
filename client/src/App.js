@@ -11,6 +11,7 @@ import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import Header from "./components/Header"
+import SearchBar from "./components/searchBar";
 import NavTabs from "./components/navtabs";
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
@@ -45,6 +46,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
+      <SearchBar></SearchBar>
       <Router>
         <>
           <Routes>
