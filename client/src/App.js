@@ -11,7 +11,7 @@ import { setContext } from '@apollo/client/link/context';
 import { ChakraProvider } from '@chakra-ui/react';
 
 import Header from "./components/Header"
-import NavTabs from "./components/NavTabs";
+import NavTabs from "./components/navtabs";
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
