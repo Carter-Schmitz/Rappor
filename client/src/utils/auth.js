@@ -1,4 +1,6 @@
 import decode from 'jwt-decode';
+import { Navigate } from 'react-router-dom';
+
 
 class AuthService {
   getProfile() {
@@ -7,6 +9,9 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
+    if (!token) {
+      return <Navigate to="/" />
+    }
     // If there is a token and it's not expired, return `true`
     return token && !this.isTokenExpired(token) ? true : false;
   }
