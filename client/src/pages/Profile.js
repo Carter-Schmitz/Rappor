@@ -47,7 +47,6 @@ const Profile = () => {
         <div className='topTen'>
           <List>
             <ListItem> {user.friends.topTenRank(1)} </ListItem>
-            
             <ListItem> {user.friends.topTenRank(2)} </ListItem>
             <ListItem> {user.friends.topTenRank(3)} </ListItem>
             <ListItem> {user.friends.topTenRank(3)} </ListItem>
