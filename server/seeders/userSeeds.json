@@ -3,5 +3,20 @@
         "username": "Bunny",
         "email": "example@test.com",
         "password": "password22"
+    },
+    {
+        "username": "Hopper",
+        "email": "example2@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Rhino",
+        "email": "example3@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Hippo",
+        "email": "example4@test.com",
+        "password": "password22"
     }
 ]
