@@ -45,7 +45,6 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-          <NavTabs />
       <Router>
         <>
           <Routes>
@@ -60,6 +59,7 @@ function App() {
             />
           </Routes>
         </>
+        <NavTabs />
       </Router>
     </ChakraProvider>
     </ApolloProvider>
