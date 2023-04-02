@@ -246,6 +246,26 @@ const resolvers = {
 
         throw new AuthenticationError('You need to be logged in!');
       },
+      changeRank: async (parent, { username, newRank }, context) => {
+        if (context.user) {
+          return await User.findOneAndUpdate(
+              { _id: context.user._id },
+              {
+                $set: { "friends.$[elem].topTenRank": newRank}
+              },
+              {
+                arrayFilters: [{ "elem.friendUsername": username}],
+                new: true,
+                runValidators: true,
+              }
+            );
+
+
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
     }
 }
 
