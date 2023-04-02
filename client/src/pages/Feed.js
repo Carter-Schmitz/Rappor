@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Navigate } from 'react-router-dom';
-import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { Box, Heading, HStack, Button, Textarea } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostList from "../components/PostList/PostList";
