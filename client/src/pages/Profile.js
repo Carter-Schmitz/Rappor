@@ -1,33 +1,41 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 
 import PostForm from '../components/PostForm';
-import PostList from '../components/PostList';
+import PostList from '../components/PostList/PostList';
 
 
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from '../utils/queries';
 
 import Auth from '../utils/auth';
 import { List, ListItem } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import TopTen from '../components/topTen';
 
+import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
+
 const Profile = () => {
   const { username } = useParams();
 
   const { loading, data } = useQuery(username ? QUERY_USER : QUERY_ME, {
-    variables: { username},
+    variables: { username },
   });
-  console.log(username) 
+  
+  const { data: friendCheck } = useQuery(QUERY_IS_FRIENDS, {
+    variables: { username },
+  });
 
+  const [addPending, { error }] = useMutation(ADD_PENDING, {
+    variables: { username }, 
+  });
 
   const user = data?.me || data?.userByUsername || {};
-  console.log(data)
+  console.log(user)
   // navigate to personal profile page if username is yours
-      if (!Auth.loggedIn() && !Auth.getProfile().data.username === username) {
-    return <Navigate to={`/profiles/${username}`} />; 
+      if (Auth.loggedIn() && Auth.getProfile().data.username === username) {
+    return <Navigate to={`/me`} />; 
   }
  
   if (loading) {
@@ -53,13 +61,18 @@ const Profile = () => {
           
         </div>
 
-      <Button> Add Friend</Button>
+      {username ? 
+      friendCheck?.isFriends === "FRIEND" ? <Button> Remove Friend</Button> :
+      friendCheck?.isFriends === "PENDING" ? <Button>Friend Request Sent</Button> :
+      <Button onClick={addPending}> Add Friend</Button>
+      : null}
+
         <div className="col-12 col-md-10 mb-5">
 
           <PostList
 
-            posts={data?.me?.posts}
-            title={`${data?.me?.username}'s Posts...`}
+            posts={user?.posts}
+            title={username ? `${user?.username}'s Posts...` : 'Your Posts...'}
             showTitle={false}
             showUsername={false}
           />
