@@ -50,6 +50,7 @@ function App() {
 
       <SearchBar></SearchBar>
       <Router>
+      <NavTabs />
         <>
           <Routes>
             <Route path="/" element={<Login/>} />
@@ -57,13 +58,16 @@ function App() {
             <Route path="/me" element={<Profile />} />
             <Route path="/friendslist" element={<FriendsList />} />
             <Route path="/signup" element={<Signup />} />
+            <Route 
+                path={"/profiles/:username" }
+                element={<Profile />}
+              />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}
             />
           </Routes>
         </>
-        <NavTabs />
       </Router>
     </ChakraProvider>
 
