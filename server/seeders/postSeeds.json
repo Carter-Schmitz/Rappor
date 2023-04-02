@@ -1,7 +1,6 @@
 [
   {
     "postText": "Hello World",
-    "postAuthor": "Bunny",
     "comments": [
       {
         "commentText": "This is a comment to test on a Post. Hopefully this will all work correctly.",
@@ -15,7 +14,6 @@
   },
   {
     "postText": "This is another text to test with. This one is going to be a bit longer because I need to take up space. Yay!",
-    "postAuthor": "Bunny",
     "comments": [
       {
         "commentText": "Well here we are again. Testing another comment on a Post. I think this is a pretty neat project.",

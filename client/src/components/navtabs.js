@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHome, FaEnvelope } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 import {
   Box,
   HStack,
@@ -8,96 +9,43 @@ import {
   Flex,
   Divider,
   Button,
+  Container,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
-function NavTabs({ currentPage, handlePageChange }) {
+function NavTabs() {
   return (
-    <Flex
-      display="flexWrap"
-      mt={1000}
-      mb={70}
-      background="grey"
-      color="red.600"
-    >
-      <List pos="sticky" className="nav nav-tabs">
-        <HStack justify="space-between">
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="/profile"
-              // Check to see if the currentPage is `profile`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Profile" ? "nav-link active" : "nav-link"
-              }
-            >
-              Profile
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="/feed"
-              // Check to see if the currentPage is `Feed`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Feed" ? "nav-link active" : "nav-link"
-              }
-            >
-              <FaHome />
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="/messages"
-              onClick={() => handlePageChange("Messages")}
-              // Check to see if the currentPage is `messages`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Messages" ? "nav-link active" : "nav-link"
-              }
-            >
-              <FaEnvelope />
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="/login"
-              onClick={() => handlePageChange("login")}
-              // Check to see if the currentPage is `login`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "login" ? "nav-link active" : "nav-link"
-              }
-            >
-              login
-            </a>
-          </ListItem>
-          <ListItem
-            className="nav-item"
-            _hover={{ color: "purple.600", transition: "80ms" }}
-          >
-            <a
-              href="/signup"
-              onClick={() => handlePageChange("Signup")}
-              // Check to see if the currentPage is `signup`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-              className={
-                currentPage === "Signup" ? "nav-link active" : "nav-link"
-              }
-            >
-              Signup
-            </a>
-          </ListItem>
-        </HStack>
-      </List>
+
+    <Flex>
+      <nav className="Nav">
+          <div className="Nav__container">
+            <Link to="/" className="Nav__brand">
+              <img src="logo.svg" className="Nav__logo" />
+            </Link>
+
+            <div className="Nav__bottom">
+              <ul className="Nav__item-wrapper">
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/me">Profile</Link>
+                </li>
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/feed">Feed</Link>
+                </li>
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/">Login</Link>
+                </li>
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/signup">Signup</Link>
+                </li>
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/friendslist">FriendsList</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
     </Flex>
   );
 }

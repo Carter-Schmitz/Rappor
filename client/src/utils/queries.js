@@ -17,7 +17,7 @@ export const QUERY_USER = gql`
 
 export const QUERY_POSTS = gql`
   query getPosts {
-    Posts {
+    posts {
       _id
       postText
       postAuthor
@@ -57,5 +57,20 @@ export const QUERY_ME = gql`
       }
     }
   }
-  
+ ` 
+  export const QUERY_FRIENDS_POSTS = gql`
+  query getFriendsposts($postId: ID!) {
+    friendsPosts(postId: $postId) {
+      _id
+      postText
+      postAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+    }
+  }
 `;
