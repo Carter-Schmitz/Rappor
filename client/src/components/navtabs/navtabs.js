@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaHome, FaEnvelope } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {
@@ -13,10 +13,13 @@ import {
   ButtonGroup,
 } from "@chakra-ui/react";
 import "./navtabs.css";
+import Auth from "../../utils/auth";
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
-function NavTabs() {
+function NavTabs({loggedIn}) {
+  //console.log("LoggedIn",props.loggedIn)
+
   return (
 
     <Flex>
@@ -35,7 +38,8 @@ function NavTabs() {
                   <Link className="Nav__link" to="/feed">Feed</Link>
                 </li>
                 <li className="Nav__item">
-                  <Link className="Nav__link" to="/">Login</Link>
+                {loggedIn ? <Link className="Nav__link" to="/" onClick={Auth.logout}>Logout</Link> 
+                : <Link className="Nav__link" to="/">Login</Link>}
                 </li>
                 <li className="Nav__item">
                   <Link className="Nav__link" to="/signup">Signup</Link>

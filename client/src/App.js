@@ -19,6 +19,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import FriendsList from "./pages/FriendsList";
 import Signup from "./pages/Signup";
+import Auth from "./utils/auth";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -43,6 +44,8 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const loggedIn = Auth.loggedIn()
+
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -50,7 +53,7 @@ function App() {
 
       <SearchBar></SearchBar>
       <Router>
-      <NavTabs />
+      <NavTabs loggedIn={loggedIn}/>
         <>
           <Routes>
             <Route path="/" element={<Login/>} />

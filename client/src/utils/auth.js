@@ -10,7 +10,7 @@ class AuthService {
   loggedIn() {
     const token = this.getToken();
     if (!token) {
-      return <Navigate to="/" />
+      return false
     }
     // If there is a token and it's not expired, return `true`
     return token && !this.isTokenExpired(token) ? true : false;
@@ -39,7 +39,7 @@ class AuthService {
 
   logout() {
     localStorage.removeItem('id_token');
-    window.location.reload();
+    window.location.assign('/')
   }
 }
 const Auth = new AuthService()
