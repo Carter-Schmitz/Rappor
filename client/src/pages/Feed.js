@@ -39,7 +39,6 @@ const Feed = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(PostText)
     try {
        await addPost({
         variables: {
