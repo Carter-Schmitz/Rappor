@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import { Box, Flex } from "@chakra-ui/react";
 
+
 import Auth from "../utils/auth";
 
 const Login = (props) => {
@@ -25,10 +26,13 @@ const Login = (props) => {
     console.log("This is for mutation", formState);
     try {
       const { data } = await login({
-        variables: { ...formState },
+
+
+        variables: { email:formState.email, password:formState.password},
       });
-      console.log(data);
-      Auth.loginUser(data.login.token);
+      console.log(data)
+      Auth.login(data.loginUser.token);
+
     } catch (e) {
       console.error(e);
     }
@@ -47,36 +51,52 @@ const Login = (props) => {
       mt="200"
     >
       <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
+        <Card className="card" styling={{ borderColor: "red" }}>
+          <CardHeader
+            className="card-header bg-dark text-light p-2"
+            textAlign="center"
+            bg="mediumpurple"
+          >
+            Login Here
+          </CardHeader>
+          <CardBody className="card-body" bg="mediumpurple">
             {data ? (
               <p>Success! You may now head to homepage</p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
+              <form
+                onSubmit={handleFormSubmit}
+                style={{ background: "mediumpurple" }}
+              >
+                <Input
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  bg="white"
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
+                  bg="white"
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: "pointer" }}
-                  type="submit"
-                >
-                  Submit
-                </button>
+
+                <Center bg="mediumpurple">
+                  <Button
+                    className="btn btn-block btn-primary"
+                    style={{ cursor: "pointer" }}
+                    type="submit"
+                    bg="red.600"
+                    _hover={{ color: "white", transition: "80ms" }}
+                  >
+                    Login
+                  </Button>
+                </Center>
               </form>
             )}
 
@@ -85,8 +105,8 @@ const Login = (props) => {
                 {error.message}
               </div>
             )}
-          </div>
-        </div>
+          </CardBody>
+        </Card>
       </div>
     </Flex>
   );

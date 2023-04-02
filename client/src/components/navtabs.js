@@ -1,5 +1,6 @@
 import React from "react";
 import { FaHome, FaEnvelope } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 import {
   Box,
   HStack,
@@ -8,12 +9,15 @@ import {
   Flex,
   Divider,
   Button,
+  Container,
+  ButtonGroup,
 } from "@chakra-ui/react";
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
-function NavTabs({ currentPage, handlePageChange }) {
+function NavTabs() {
   return (
+
     <Flex
       display="flexWrap"
       mt={1000}

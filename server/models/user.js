@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const friendSchema = require("./Friend");
 const pendingFriendSchema = require("./pendingFriend");
+const postSchema = require("./Post");
 
 const userSchema = new Schema({
   username: {
@@ -21,12 +22,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
+  posts: [postSchema],
   friends: [friendSchema],
   pendingFriends: [pendingFriendSchema]
 });

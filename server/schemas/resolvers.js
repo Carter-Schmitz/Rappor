@@ -1,24 +1,51 @@
-const { Post, User } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
 const resolvers = {
     Query: {
       me: async (parent, args, context) => {
-        return User.find({_id: context.user._id}).populate('posts');
+        const user = User.findOne({_id: context.user._id});
+        return user
       },
       users: async () => {
-        return User.find().populate('posts');
+        return User.find();
       },
       userByUsername: async (parent, { username }) => {
-        return User.findOne({username: username}).populate('posts');
+        return User.findOne({username: username});
       },
       userById: async (parent, { id }) => {
-        return User.findOne({_id: id}).populate('posts');
+        return User.findOne({_id: id});
+
       },
-      posts: async () => {
-        return Post.find();
-      },
+      friendsPosts: async (parent, args, context) => {
+        const user = await User.findOne({_id: context.user._id})
+
+        let allPosts = [...user.posts];
+
+        const data = Promise.all(
+            user.friends.map(async (friend) => {
+            const id = friend.friendId;
+            const friendData = await User.findOne({_id: id})
+            const friendPosts = friendData.posts;
+            allPosts = [...allPosts, ...friendPosts]
+            }
+          )
+        )
+
+        return Promise.resolve(data).then(() => {
+          allPosts.sort(function(a, b) {
+            let keyA = (a.timeSort);
+            let keyB = (b.timeSort);
+            // Compare the 2 dates
+            if (keyA > keyB) return -1;
+            if (keyA < keyB) return 1;
+            return 0;
+          });
+
+          return allPosts
+        })
+      }
     },
 
     Mutation: {
@@ -69,7 +96,7 @@ const resolvers = {
 
           check ? console.log("Already Pending") : updateUser();
 
-          return User.findOne({_id: context.user._id}).populate('posts');
+          return User.findOne({_id: context.user._id});
         }
       },
       //add friend mutation to be called after pending friend is accepted
@@ -129,9 +156,62 @@ const resolvers = {
             updateUsersFriends()
           }
 
-          return User.findOne({_id: context.user._id}).populate('posts');
+          return User.findOne({_id: context.user._id});
         }
         // If user attempts to execute this mutation and isn't logged in, throw an error
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
+      addPost: async (parent, { postText }, context) => {
+        if (context.user) {
+          return User.findOneAndUpdate(
+              { _id: context.user._id },
+              {
+                $addToSet: {posts: {postText: postText, postAuthor: context.user.username, downVotes: []}},
+              },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      },
+      removePost: async (parent, { postId }, context) => {
+        if (context.user) {
+          return User.findOneAndUpdate(
+              { _id: context.user._id },
+              {
+                $pull: {posts: {_id: {$eq: postId}}},
+              },
+              {
+                new: true,
+                runValidators: true,
+              }
+            );
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
+      addComment: async (parent, { username, postId, commentText }, context) => {
+        if (context.user) {
+          return User.findOneAndUpdate(
+              {"posts.$[elem]":postId },
+              {
+                $addToSet: { "posts.$[elem].comments": {commentText: commentText, commentAuthor: context.user.username}}
+              },
+              {
+                arrayFilters: [{ "elem._id": postId}],
+                new: true,
+                runValidators: true,
+              }
+            );
+
+
+        }
+
         throw new AuthenticationError('You need to be logged in!');
       },
     }

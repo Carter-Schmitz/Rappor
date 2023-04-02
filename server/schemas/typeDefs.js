@@ -26,6 +26,17 @@ const typeDefs = gql`
     postText: String
     postAuthor: String
     createdAt: String
+    timeSort: String
+    comments: [Comment]
+    downVotes: [User]
+  }
+
+  type MultiPost {
+    _id: ID
+    postText: String
+    postAuthor: String
+    createdAt: String
+    timeSort: String
     comments: [Comment]
     downVotes: [User]
   }
@@ -45,10 +56,12 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    posts: [Post]
+    user(username: String!): User
+    posts(username: String): [Post]
     userByUsername(username:String): User
     userById(id:String): User
     me: User
+    friendsPosts: [MultiPost]
   }
 
   type Mutation {
@@ -56,6 +69,9 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addFriend(pendingId: String): User
     addPending(username: String): User
+    addPost(postText: String): User
+    removePost(postId: String): User
+    addComment(postId: String, commentText: String): User
   }
 `;
 
