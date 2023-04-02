@@ -10,9 +10,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { setContext } from "@apollo/client/link/context";
 import { ChakraProvider } from "@chakra-ui/react";
 
-import Header from "./components/Header";
+import Header from "./components/Header"
 import SearchBar from "./components/searchBar";
-import NavTabs from "./components/NavTabs";
+import NavTabs from "./components/navtabs";
+
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
@@ -46,24 +47,26 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
-        <SearchBar></SearchBar>
-        <Router>
-          <>
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/feed" element={<Feed />} />
-              <Route path="/me" element={<Profile />} />
-              <Route path="/friendslist" element={<FriendsList />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route
-                path="*"
-                element={<h1 className="display-2">Wrong page!</h1>}
-              />
-            </Routes>
-          </>
-          <NavTabs />
-        </Router>
-      </ChakraProvider>
+
+      <SearchBar></SearchBar>
+      <Router>
+        <>
+          <Routes>
+            <Route path="/" element={<Login/>} />
+            <Route path="/feed" element={<Feed/>} />
+            <Route path="/me" element={<Profile />} />
+            <Route path="/friendslist" element={<FriendsList />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="*"
+              element={<h1 className="display-2">Wrong page!</h1>}
+            />
+          </Routes>
+        </>
+        <NavTabs />
+      </Router>
+    </ChakraProvider>
+
     </ApolloProvider>
   );
 }
