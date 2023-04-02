@@ -15,24 +15,26 @@ import { Button } from '@chakra-ui/button';
 import TopTen from '../components/topTen';
 
 const Profile = () => {
-  const { username: userParam } = useParams();
+  const { username } = useParams();
 
-  const { loading, data } = useQuery(QUERY_ME);
-  //console.log("this is Auth",data?.me?.posts) 
+  const { loading, data } = useQuery(username ? QUERY_USER : QUERY_ME, {
+    variables: { username},
+  });
+  console.log(username) 
 
 
-  const user = data?.user || {};
-  //console.log(user)
+  const user = data?.me || data?.userByUsername || {};
+  console.log(data)
   // navigate to personal profile page if username is yours
-      if (!Auth.loggedIn() && !Auth.getProfile().data.username === data?.me?.username) {
-    return <Navigate to="/feed" />; 
+      if (!Auth.loggedIn() && !Auth.getProfile().data.username === username) {
+    return <Navigate to={`/profiles/${username}`} />; 
   }
  
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!data?.me?.username) {
+  if (!user?.username) {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
@@ -45,23 +47,13 @@ const Profile = () => {
     <div>
       <div className="flex-row justify-center mb-3">
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {data?.me?.username ? `${data?.me?.username}'s` : 'your'} profile.
+          Viewing {username ? `${user.username}'s` : 'your'} profile.
         </h2>
         <div className='topTen'>
-          {/* <List>
-            <ListItem> {user.friends.topTenRank(1)} </ListItem>
-            <ListItem> {user.friends.topTenRank(2)} </ListItem>
-            <ListItem> {user.friends.topTenRank(3)} </ListItem>
-            <ListItem> {user.friends.topTenRank(3)} </ListItem>
-            <ListItem> {user.friends[4]} </ListItem>
-            <ListItem> {user.friends[5]} </ListItem>
-            <ListItem> {user.friends[6]} </ListItem>
-            <ListItem> {user.friends[7]} </ListItem>
-            <ListItem> {user.friends[8]} </ListItem>
-            <ListItem> {user.friends[9]} </ListItem>
-          </List> */}
           
         </div>
+
+      <Button> Add Friend</Button>
         <div className="col-12 col-md-10 mb-5">
 
           <PostList
@@ -72,7 +64,7 @@ const Profile = () => {
             showUsername={false}
           />
         </div>
-        {!userParam && (
+        {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
             style={{ border: '1px dotted #1a1a1a' }}

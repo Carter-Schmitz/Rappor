@@ -6,6 +6,7 @@ const SearchBar = (props) => {
   const [inputText, setInputText] = useState("");
   let inputHandler = (e) => {
     //convert input text to lower case
+    // Insert Query Here
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
     const filteredData = props.filter((el) => {
