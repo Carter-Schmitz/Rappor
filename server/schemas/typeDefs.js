@@ -73,6 +73,7 @@ const typeDefs = gql`
     addPost(postText: String): User
     removePost(postId: String): User
     addComment(postId: String, commentText: String): User
+    changeRank(username: String, newRank: String): User
   }
 `;
 
