@@ -14,7 +14,8 @@ const Feed = () => {
   const [addPost, { error }] = useMutation(ADD_POST, {
     refetchQueries: [
       {query: QUERY_FRIENDS_POSTS}
-    ]
+    ],
+    awaitRefetchQueries: true
   });
 
   const { data: posts}= useQuery(QUERY_FRIENDS_POSTS); 

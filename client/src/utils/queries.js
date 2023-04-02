@@ -5,7 +5,6 @@ export const QUERY_USER = gql`
     userByUsername(username: $username) {
       _id
       username
-      email
       posts {
         _id
         postText
@@ -55,6 +54,10 @@ export const QUERY_ME = gql`
         postAuthor
         createdAt
       }
+      pendingFriends {
+      pendingUsername
+      pendingId
+    }
     }
   }
 `;
@@ -82,4 +85,10 @@ export const QUERY_FRIENDS_POSTS = gql`
       }
     }
   }
+`;
+
+export const QUERY_IS_FRIENDS = gql`
+query isFriends($username: String) {
+  isFriends(username: $username)
+}
 `;

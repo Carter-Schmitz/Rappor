@@ -62,6 +62,7 @@ const typeDefs = gql`
     userById(id:String): User
     me: User
     friendsPosts: [MultiPost]
+    isFriends(username: String): String
   }
 
   type Mutation {

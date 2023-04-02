@@ -45,6 +45,38 @@ const resolvers = {
 
           return allPosts
         })
+      },
+      isFriends: async (parent, { username }, context) => {
+        const user = await User.findOne({_id: context.user._id});
+        const request = await User.findOne({username: username});
+        //check friends
+        if (user.friends.length) {
+          for (let index = 0; index < user.friends.length; index++) {
+            if (user.friends[index].friendUsername === username) {
+              return "FRIEND";
+            }         
+          }
+        }
+
+        //check if current users request is pending
+        if (request.pendingFriends.length) {
+          for (let index = 0; index < request.pendingFriends.length; index++) {
+            if (request.pendingFriends[index].pendingUsername === user.username) {
+              return "PENDING_ACCEPT";
+            }         
+          }
+        }
+       
+        //check if current user has a pending request from visited user
+        if (user.pendingFriends.length) {
+          for (let index = 0; index < user.pendingFriends.length; index++) {
+            if (user.pendingFriends[index].pendingUsername === username) {
+              return "PENDING_REQ";
+            }         
+          }
+        }
+
+        return "NOT FRIENDS";
       }
     },
 

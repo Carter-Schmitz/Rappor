@@ -12,7 +12,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 import Header from "./components/Header"
 import SearchBar from "./components/searchBar";
-import NavTabs from "./components/navtabs";
+import NavTabs from "./components/navtabs/navtabs";
 
 import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
@@ -58,10 +58,9 @@ function App() {
             <Route path="/me" element={<Profile />} />
             <Route path="/friendslist" element={<FriendsList />} />
             <Route path="/signup" element={<Signup />} />
-            <Route 
-                path={"/profiles/:username" }
-                element={<Profile />}
-              />
+            <Route path={"/profiles" }>
+              <Route path=":username" element={<Profile />}/>
+            </Route>
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}
