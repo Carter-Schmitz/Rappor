@@ -1,33 +1,37 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Navigate } from 'react-router-dom';
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { Box, Heading, HStack, Button, Textarea } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostList from "../components/PostList/PostList";
-import { useForm } from "react-hook-form";
-import { QUERY_FRIENDS_POSTS } from '../utils/queries';
+import { QUERY_FRIENDS_POSTS, QUERY_ME } from '../utils/queries';
 import { ADD_POST } from "../utils/mutations";
 import Auth from '../utils/auth';
 
 const Feed = () => {
   const [PostText, setPostText] = useState('');
 
-  const [characterCount, setCharacterCount] = useState(0);
-  const [addPost, { error }] = useMutation(ADD_POST);
-  const { loading, data } = useQuery(QUERY_FRIENDS_POSTS);
-  console.log("this is Auth",data) 
+  const [addPost, { error }] = useMutation(ADD_POST, {
+    refetchQueries: [
+      {query: QUERY_FRIENDS_POSTS}
+    ]
+  });
+
+  const { data: posts}= useQuery(QUERY_FRIENDS_POSTS); 
+  //console.log("this is posts", posts?.friendsPosts)
 
 
-  const user = data?.user || {};
-  //console.log(user)
+  const { loading, data: me } = useQuery(QUERY_ME); 
+  //console.log("this is posts",me)
+
   // navigate to personal profile page if username is yours
-      if (!Auth.loggedIn() && !Auth.getProfile().data.username === data?.me?.username) {
+      if (!Auth.loggedIn() && !Auth.getProfile().data.username === me?.username) {
     return <Navigate to="/feed" />; 
   }
  
   if (loading) {
     return <div>Loading...</div>;
-  } ;
+  }
 
   if (error) {
     return (error)
@@ -37,13 +41,13 @@ const Feed = () => {
     event.preventDefault();
     console.log(PostText)
     try {
-      const { data } = await addPost({
+       await addPost({
         variables: {
           postText: PostText
         },
       });
 
-      setPostText('');
+      setPostText('');  
     } catch (err) {
       console.error(err);
     }
@@ -54,7 +58,6 @@ const Feed = () => {
 
     if (name === 'PostText' && value.length <= 280) {
       setPostText(value);
-      setCharacterCount(value.length);
     }
   }
 
@@ -81,8 +84,8 @@ const Feed = () => {
         />
       </form>
       <PostList
-      posts={data?.me?.posts}
-      title={`${data?.me?.username}'s Posts...`}
+      posts={posts?.friendsPosts}
+      title={`Your Feed...`}
       showTitle={false}
       showUsername={false} />
     </Box>
