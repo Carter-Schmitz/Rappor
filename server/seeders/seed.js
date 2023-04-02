@@ -3,6 +3,7 @@ const { User } = require('../models');
 const postSeeds = require('./postSeeds.json');
 const userSeeds = require('./userSeeds.json');
 const friendSeeds = require('./friendSeeds.json');
+
 const { mongoose } = require('mongoose');
 
 db.once('open', async () => {
