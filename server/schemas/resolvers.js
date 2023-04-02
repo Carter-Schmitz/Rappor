@@ -16,6 +16,7 @@ const resolvers = {
       },
       userById: async (parent, { id }) => {
         return User.findOne({_id: id});
+
       },
       friendsPosts: async (parent, args, context) => {
         const user = await User.findOne({_id: context.user._id})

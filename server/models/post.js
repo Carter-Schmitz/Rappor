@@ -38,4 +38,5 @@ const postSchema = new Schema({
   ],
 });
 
+
 module.exports = postSchema;
