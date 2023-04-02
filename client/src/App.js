@@ -50,6 +50,7 @@ function App() {
 
       <SearchBar></SearchBar>
       <Router>
+      <NavTabs />
         <>
           <Routes>
             <Route path="/" element={<Login/>} />
@@ -63,7 +64,6 @@ function App() {
             />
           </Routes>
         </>
-        <NavTabs />
       </Router>
     </ChakraProvider>
 
