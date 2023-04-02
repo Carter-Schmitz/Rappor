@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
-import { Box, Flex, Card, CardBody, CardHeader, CardFooter, Button, Input, Center } from '@chakra-ui/react';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
+import { Box, Flex } from "@chakra-ui/react";
 
-import Auth from '../utils/auth';
+
+import Auth from "../utils/auth";
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -22,9 +23,10 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("This is for mutation",formState);
+    console.log("This is for mutation", formState);
     try {
       const { data } = await login({
+
 
         variables: { email:formState.email, password:formState.password},
       });
@@ -37,8 +39,8 @@ const Login = (props) => {
 
     // clear form values
     setFormState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     });
   };
 
@@ -83,6 +85,7 @@ const Login = (props) => {
                   onChange={handleChange}
                   bg="white"
                 />
+
                 <Center bg="mediumpurple">
                   <Button
                     className="btn btn-block btn-primary"
