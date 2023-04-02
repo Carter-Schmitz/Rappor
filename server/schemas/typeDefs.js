@@ -26,6 +26,17 @@ const typeDefs = gql`
     postText: String
     postAuthor: String
     createdAt: String
+    timeSort: String
+    comments: [Comment]
+    downVotes: [User]
+  }
+
+  type MultiPost {
+    _id: ID
+    postText: String
+    postAuthor: String
+    createdAt: String
+    timeSort: String
     comments: [Comment]
     downVotes: [User]
   }
@@ -50,6 +61,7 @@ const typeDefs = gql`
     userByUsername(username:String): User
     userById(id:String): User
     me: User
+    friendsPosts: [MultiPost]
   }
 
   type Mutation {
@@ -59,7 +71,7 @@ const typeDefs = gql`
     addPending(username: String): User
     addPost(postText: String): User
     removePost(postId: String): User
-    addComment(username: String, postId: String, commentText: String): User
+    addComment(postId: String, commentText: String): User
   }
 `;
 

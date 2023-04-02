@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
+import { Box, Flex, Card, CardBody, CardHeader, CardFooter, Button, Input, Center } from '@chakra-ui/react';
 
 import Auth from '../utils/auth';
 
@@ -42,42 +43,57 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <Flex
+      className="flex-row justify-center mb-4"
+      justifyContent="center"
+      mt="200"
+    >
       <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
+        <Card className="card" styling={{ borderColor: "red" }}>
+          <CardHeader
+            className="card-header bg-dark text-light p-2"
+            textAlign="center"
+            bg="mediumpurple"
+          >
+            Login Here
+          </CardHeader>
+          <CardBody className="card-body" bg="mediumpurple">
             {data ? (
-              <p>
-
-                Success! You may now head to homepage
-
-              </p>
+              <p>Success! You may now head to homepage</p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
+              <form
+                onSubmit={handleFormSubmit}
+                style={{ background: "mediumpurple" }}
+              >
+                <Input
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  bg="white"
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
+                  bg="white"
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
+                <Center bg="mediumpurple">
+                  <Button
+                    className="btn btn-block btn-primary"
+                    style={{ cursor: "pointer" }}
+                    type="submit"
+                    bg="red.600"
+                    _hover={{ color: "white", transition: "80ms" }}
+                  >
+                    Login
+                  </Button>
+                </Center>
               </form>
             )}
 
@@ -86,10 +102,10 @@ const Login = (props) => {
                 {error.message}
               </div>
             )}
-          </div>
-        </div>
+          </CardBody>
+        </Card>
       </div>
-    </main>
+    </Flex>
   );
 };
 

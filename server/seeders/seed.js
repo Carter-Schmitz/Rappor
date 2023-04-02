@@ -4,6 +4,8 @@ const postSeeds = require('./postSeeds.json');
 const userSeeds = require('./userSeeds.json');
 const friendSeeds = require('./friendSeeds.json');
 
+const { mongoose } = require('mongoose');
+
 db.once('open', async () => {
   try {
     await User.deleteMany({});
@@ -18,6 +20,7 @@ db.once('open', async () => {
           {
             $addToSet: {
               posts: {
+                _id: mongoose.Types.ObjectId(),
                 postText: postSeeds[i].postText,
                 postAuthor: userSeeds[index].username,
                 comments: postSeeds[i].comments
