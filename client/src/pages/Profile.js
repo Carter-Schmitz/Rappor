@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
@@ -27,15 +27,32 @@ const Profile = () => {
     variables: { username },
   });
 
-  const [addPending, { error }] = useMutation(ADD_PENDING, {
-    variables: { username }, 
+  const user = data?.me || data?.userByUsername || {};
+
+  const [addPending, { error: pendingError }] = useMutation(ADD_PENDING, { 
+    refetchQueries: [
+      {query: QUERY_IS_FRIENDS,
+       variables: { username }},
+      ],
+      awaitRefetchQueries: true
+  });
+ 
+  const [addFriend, { error: addError }] = useMutation(ADD_FRIEND, {
+    refetchQueries: [
+      {query: QUERY_IS_FRIENDS,
+        variables: { username }},
+       ],
+       awaitRefetchQueries: true
   });
 
-  const user = data?.me || data?.userByUsername || {};
-  console.log(user)
+
   // navigate to personal profile page if username is yours
       if (Auth.loggedIn() && Auth.getProfile().data.username === username) {
     return <Navigate to={`/me`} />; 
+  }
+
+  if ( addError || pendingError) {
+    Error(addError || pendingError)
   }
  
   if (loading) {
@@ -63,8 +80,9 @@ const Profile = () => {
 
       {username ? 
       friendCheck?.isFriends === "FRIEND" ? <Button> Remove Friend</Button> :
-      friendCheck?.isFriends === "PENDING" ? <Button>Friend Request Sent</Button> :
-      <Button onClick={addPending}> Add Friend</Button>
+      friendCheck?.isFriends  === "PENDING_ACCEPT" ? <Button>Friend Request Sent</Button> :
+      friendCheck?.isFriends  === "PENDING_REQ" ? <Button onClick={() => {addFriend({variables: { pendingId: user?._id }})}}>Accept Friend Request</Button> :
+      <Button onClick={() => {addPending({variables: { username }})}}> Add Friend</Button>
       : null}
 
         <div className="col-12 col-md-10 mb-5">
