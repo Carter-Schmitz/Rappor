@@ -58,11 +58,20 @@ const resolvers = {
           }
         }
 
-        //check if pending
+        //check if current users request is pending
         if (request.pendingFriends.length) {
           for (let index = 0; index < request.pendingFriends.length; index++) {
             if (request.pendingFriends[index].pendingUsername === user.username) {
-              return "PENDING";
+              return "PENDING_ACCEPT";
+            }         
+          }
+        }
+       
+        //check if current user has a pending request from visited user
+        if (user.pendingFriends.length) {
+          for (let index = 0; index < user.pendingFriends.length; index++) {
+            if (user.pendingFriends[index].pendingUsername === username) {
+              return "PENDING_REQ";
             }         
           }
         }
