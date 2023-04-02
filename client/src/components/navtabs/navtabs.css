@@ -1,0 +1,34 @@
+.Nav {
+    display: flex;
+    width: 100%;
+    margin: 10px 0 15px;
+}
+
+.Nav__container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.Nav__brand {
+    width: 20%;
+}
+
+ul {
+    list-style: none;
+}
+
+.Nav__bottom{
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.Nav__item-wrapper{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
