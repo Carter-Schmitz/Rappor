@@ -54,6 +54,11 @@ export const QUERY_ME = gql`
         postAuthor
         createdAt
       }
+      friends {
+        friendId
+        friendUsername
+        topTenRank
+      }
       pendingFriends {
       pendingUsername
       pendingId
