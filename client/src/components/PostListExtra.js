@@ -1,5 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaThumbsDown, FaComment, FaShareSquare } from 'react-icons/fa';
+import {
+  Card,
+  CardHeader,
+  Avatar,
+  Heading,
+  CardBody,
+  CardFooter,
+  IconButton,
+  Text,
+  Button
+} from "@chakra-ui/react";
 
 const PostList = ({
   posts,
@@ -16,36 +28,52 @@ const PostList = ({
       {showTitle && <h3>{title}</h3>}
       {posts &&
         posts.map((post) => (
-          <div key={post._id} className="card mb-3">
-            <h4 className="card-header bg-primary text-light p-2 m-0">
+          <Card key={post._id} className="card mb-3">
+            <CardHeader className="card-header bg-primary text-light p-2 m-0">
               {showUsername ? (
                 <Link
                   className="text-light"
                   to={`/profiles/${post.postAuthor}`}
                 >
                   {post.postAuthor} <br />
-                  <span style={{ fontSize: '1rem' }}>
+                  <span style={{ fontSize: "1rem" }}>
                     made this post on {post.createdAt}
                   </span>
                 </Link>
               ) : (
                 <>
-                  <span style={{ fontSize: '1rem' }}>
+                  <span style={{ fontSize: "1rem" }}>
                     You made this post on {post.createdAt}
                   </span>
                 </>
               )}
-            </h4>
-            <div className="card-body bg-light p-2">
-              <p>{post.postText}</p>
-            </div>
+            </CardHeader>
+            <CardBody className="card-body bg-light p-2">
+              <Text>{post.postText}</Text>
+            </CardBody>
+            <CardFooter
+              justify="space-between"
+              flexWrap="wrap"
+              sx={{ "& > button": { minW: "136px" } }}
+            >
+              <Button flex="1" variant="ghost" leftIcon={<FaThumbsDown />}>
+                Downvote
+              </Button>
+              <Button flex="1" variant="ghost" leftIcon={<FaComment />}>
+                Comment
+              </Button>
+              <Button flex="1" variant="ghost" leftIcon={<FaShareSquare />}>
+                Share
+              </Button>
+            </CardFooter>
+
             <Link
               className="btn btn-primary btn-block btn-squared"
               to={`/posts/${post._id}`}
             >
               Join the discussion on this post.
             </Link>
-          </div>
+          </Card>
         ))}
     </div>
   );

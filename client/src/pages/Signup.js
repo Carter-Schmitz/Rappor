@@ -3,6 +3,17 @@ import { Link } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+import {
+  Box,
+  Flex,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+  Button,
+  Input,
+  Center,
+} from "@chakra-ui/react";
 
 import Auth from '../utils/auth';
 
@@ -39,49 +50,66 @@ const Signup = () => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <Flex
+      className="flex-row justify-center mb-4"
+      justifyContent="center"
+      mt="200"
+    >
       <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
+        <Card className="card">
+          <CardHeader
+            className="card-header bg-dark text-light p-2"
+            textAlign="center"
+            bg="white"
+          >
+            Sign Up
+          </CardHeader>
+          <CardBody className="card-body" bg="white">
             {data ? (
               <p>
-                Success! You may now head{' '}
+                Success! You may now head{" "}
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
+              <form onSubmit={handleFormSubmit} style={{ background: "white" }}>
+                <Input
                   className="form-input"
                   placeholder="Your username"
                   name="username"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
+                  bg="beige"
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
+                  bg="beige"
                 />
-                <input
+                <Input
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
+                  bg="beige"
                 />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
+                <Center bg="white">
+                  <Button
+                    className="btn btn-block btn-primary"
+                    style={{ cursor: "pointer" }}
+                    type="submit"
+                    bg="red.600"
+                    _hover={{ color: "cyan", transition: "80ms" }}
+                  >
+                    Submit
+                  </Button>
+                </Center>
               </form>
             )}
 
@@ -90,10 +118,10 @@ const Signup = () => {
                 {error.message}
               </div>
             )}
-          </div>
-        </div>
+          </CardBody>
+        </Card>
       </div>
-    </main>
+    </Flex>
   );
 };
 
