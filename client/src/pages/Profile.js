@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
-import { Box } from '@chakra-ui/react';
+import { Box, Button, Heading } from '@chakra-ui/react';
 
 
 import PostForm from '../components/PostForm';
@@ -13,7 +13,6 @@ import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from '../utils/queries';
 
 import Auth from '../utils/auth';
 import { List, ListItem } from '@chakra-ui/layout';
-import { Button } from '@chakra-ui/button';
 import TopTen from '../components/topTen';
 
 import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
@@ -71,11 +70,19 @@ const Profile = () => {
   }
 
   return (
-    <Box align="center">
+    <Box align="center" Box maxW="1100px" mx="auto" py="10">
       <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
+        <Heading className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
           Viewing {username ? `${user.username}'s` : "your"} profile.
-        </h2>
+        </Heading>
+        {!username && (
+          <div
+            className="col-12 col-md-10 mb-3 p-3"
+            // style={{ border: "1px dotted #1a1a1a" }}
+          >
+            <PostForm />
+          </div>
+        )}
         <div className="topTen"></div>
 
         {username ? (
@@ -111,14 +118,14 @@ const Profile = () => {
             showUsername={false}
           />
         </Box>
-        {!username && (
+        {/* {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
-            style={{ border: "1px dotted #1a1a1a" }}
+            // style={{ border: "1px dotted #1a1a1a" }}
           >
             <PostForm />
           </div>
-        )}
+        )} */}
       </div>
     </Box>
   );
