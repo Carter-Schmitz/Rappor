@@ -16,10 +16,68 @@ const resolvers = {
       },
       userById: async (parent, { id }) => {
         return User.findOne({_id: id});
+
       },
-      posts: async () => {
-        return Post.find();
+      friendsPosts: async (parent, args, context) => {
+        const user = await User.findOne({_id: context.user._id})
+
+        let allPosts = [...user.posts];
+
+        const data = Promise.all(
+            user.friends.map(async (friend) => {
+            const id = friend.friendId;
+            const friendData = await User.findOne({_id: id})
+            const friendPosts = friendData.posts;
+            allPosts = [...allPosts, ...friendPosts]
+            }
+          )
+        )
+
+        return Promise.resolve(data).then(() => {
+          allPosts.sort(function(a, b) {
+            let keyA = (a.timeSort);
+            let keyB = (b.timeSort);
+            // Compare the 2 dates
+            if (keyA > keyB) return -1;
+            if (keyA < keyB) return 1;
+            return 0;
+          });
+
+          return allPosts
+        })
       },
+      isFriends: async (parent, { username }, context) => {
+        const user = await User.findOne({_id: context.user._id});
+        const request = await User.findOne({username: username});
+        //check friends
+        if (user.friends.length) {
+          for (let index = 0; index < user.friends.length; index++) {
+            if (user.friends[index].friendUsername === username) {
+              return "FRIEND";
+            }         
+          }
+        }
+
+        //check if current users request is pending
+        if (request.pendingFriends.length) {
+          for (let index = 0; index < request.pendingFriends.length; index++) {
+            if (request.pendingFriends[index].pendingUsername === user.username) {
+              return "PENDING_ACCEPT";
+            }         
+          }
+        }
+       
+        //check if current user has a pending request from visited user
+        if (user.pendingFriends.length) {
+          for (let index = 0; index < user.pendingFriends.length; index++) {
+            if (user.pendingFriends[index].pendingUsername === username) {
+              return "PENDING_REQ";
+            }         
+          }
+        }
+
+        return "NOT FRIENDS";
+      }
     },
 
     Mutation: {
@@ -188,6 +246,26 @@ const resolvers = {
 
         throw new AuthenticationError('You need to be logged in!');
       },
+      changeRank: async (parent, { username, newRank }, context) => {
+        if (context.user) {
+          return await User.findOneAndUpdate(
+              { _id: context.user._id },
+              {
+                $set: { "friends.$[elem].topTenRank": newRank}
+              },
+              {
+                arrayFilters: [{ "elem.friendUsername": username}],
+                new: true,
+                runValidators: true,
+              }
+            );
+
+
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      },
+
     }
 }
 

@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 
 import Header from "../Header";
 
-import NavTabs from "../NavTabs";
+import NavTabs from "../navtabs/navtabs";
 import Feed from "../../pages/Feed";
 import Profile from "../../pages/Profile";
 import Login from "../../pages/Login";

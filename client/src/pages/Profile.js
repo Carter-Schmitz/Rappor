@@ -1,38 +1,65 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 
 
 import PostForm from '../components/PostForm';
-import PostList from '../components/PostList';
+import PostList from '../components/PostList/PostList';
 
 
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from '../utils/queries';
 
 import Auth from '../utils/auth';
 import { List, ListItem } from '@chakra-ui/layout';
 import { Button } from '@chakra-ui/button';
 import TopTen from '../components/topTen';
 
+import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
+
 const Profile = () => {
-  const { username: userParam } = useParams();
+  const { username } = useParams();
 
-  const { loading, data } = useQuery(QUERY_ME);
-  //console.log("this is Auth",data?.me?.posts) 
+  const { loading, data } = useQuery(username ? QUERY_USER : QUERY_ME, {
+    variables: { username },
+  });
+  
+  const { data: friendCheck } = useQuery(QUERY_IS_FRIENDS, {
+    variables: { username },
+  });
+
+  const user = data?.me || data?.userByUsername || {};
+
+  const [addPending, { error: pendingError }] = useMutation(ADD_PENDING, { 
+    refetchQueries: [
+      {query: QUERY_IS_FRIENDS,
+       variables: { username }},
+      ],
+      awaitRefetchQueries: true
+  });
+ 
+  const [addFriend, { error: addError }] = useMutation(ADD_FRIEND, {
+    refetchQueries: [
+      {query: QUERY_IS_FRIENDS,
+        variables: { username }},
+       ],
+       awaitRefetchQueries: true
+  });
 
 
-  const user = data?.user || {};
-  //console.log(user)
   // navigate to personal profile page if username is yours
-      if (!Auth.loggedIn() && !Auth.getProfile().data.username === data?.me?.username) {
-    return <Navigate to="/feed" />; 
+      if (Auth.loggedIn() && Auth.getProfile().data.username === username) {
+    return <Navigate to={`/me`} />; 
+  }
+
+  if ( addError || pendingError) {
+    Error(addError || pendingError)
   }
  
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!data?.me?.username) {
+  if (!user?.username) {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
@@ -45,34 +72,30 @@ const Profile = () => {
     <div>
       <div className="flex-row justify-center mb-3">
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {data?.me?.username ? `${data?.me?.username}'s` : 'your'} profile.
+          Viewing {username ? `${user.username}'s` : 'your'} profile.
         </h2>
         <div className='topTen'>
-          {/* <List>
-            <ListItem> {user.friends.topTenRank(1)} </ListItem>
-            <ListItem> {user.friends.topTenRank(2)} </ListItem>
-            <ListItem> {user.friends.topTenRank(3)} </ListItem>
-            <ListItem> {user.friends.topTenRank(3)} </ListItem>
-            <ListItem> {user.friends[4]} </ListItem>
-            <ListItem> {user.friends[5]} </ListItem>
-            <ListItem> {user.friends[6]} </ListItem>
-            <ListItem> {user.friends[7]} </ListItem>
-            <ListItem> {user.friends[8]} </ListItem>
-            <ListItem> {user.friends[9]} </ListItem>
-          </List> */}
           
         </div>
+
+      {username ? 
+      friendCheck?.isFriends === "FRIEND" ? <Button> Remove Friend</Button> :
+      friendCheck?.isFriends  === "PENDING_ACCEPT" ? <Button>Friend Request Sent</Button> :
+      friendCheck?.isFriends  === "PENDING_REQ" ? <Button onClick={() => {addFriend({variables: { pendingId: user?._id }})}}>Accept Friend Request</Button> :
+      <Button onClick={() => {addPending({variables: { username }})}}> Add Friend</Button>
+      : null}
+
         <div className="col-12 col-md-10 mb-5">
 
           <PostList
 
-            posts={data?.me?.posts}
-            title={`${data?.me?.username}'s Posts...`}
+            posts={user?.posts}
+            title={username ? `${user?.username}'s Posts...` : 'Your Posts...'}
             showTitle={false}
             showUsername={false}
           />
         </div>
-        {!userParam && (
+        {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
             style={{ border: '1px dotted #1a1a1a' }}

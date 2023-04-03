@@ -1,13 +1,10 @@
-const { Schema, mongoose} = require("mongoose");
+const { Schema, model } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
 const commentSchema = require("./Comment");
 
-const postSchema = new Schema({
-  _id: { 
-    type: Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId
-  },
+const multiPostSchema = new Schema({
+  _id: { type: Schema.Types.ObjectId },
   postText: {
     type: String,
     required: "You need to leave a post!",
@@ -22,21 +19,19 @@ const postSchema = new Schema({
   },
   createdAt: {
     type: Number,
-    default: Date.now,
-    get: (timestamp) => dateFormat(timestamp),
   },
   timeSort: {
     type: Number,
-    default: Date.now,
   },
   comments: [commentSchema],
   downVotes: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
     },
   ],
 });
 
+const MultiPost = model("MultiPost", multiPostSchema);
 
-module.exports = postSchema;
+module.exports = MultiPost;
