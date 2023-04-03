@@ -65,7 +65,7 @@ const Feed = () => {
     <Box maxW="600px" mx="auto" py="10">
       <form onSubmit={handleFormSubmit}>
         <HStack justify="space-between">
-          <Heading size="lg" color="ivory">Start a Rappor</Heading>
+          <Heading size="lg" color="Black">Start a Rappor</Heading>
           <Button
             colorScheme="red"
             type="submit"

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
+import { Box } from '@chakra-ui/react';
+
 
 import PostForm from '../components/PostForm';
 import PostList from '../components/PostList/PostList';
@@ -69,44 +71,56 @@ const Profile = () => {
   }
 
   return (
-    <div>
+    <Box align="center">
       <div className="flex-row justify-center mb-3">
         <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {username ? `${user.username}'s` : 'your'} profile.
+          Viewing {username ? `${user.username}'s` : "your"} profile.
         </h2>
-        <div className='topTen'>
-          
-        </div>
+        <div className="topTen"></div>
 
-      {username ? 
-      friendCheck?.isFriends === "FRIEND" ? <Button> Remove Friend</Button> :
-      friendCheck?.isFriends  === "PENDING_ACCEPT" ? <Button>Friend Request Sent</Button> :
-      friendCheck?.isFriends  === "PENDING_REQ" ? <Button onClick={() => {addFriend({variables: { pendingId: user?._id }})}}>Accept Friend Request</Button> :
-      <Button onClick={() => {addPending({variables: { username }})}}> Add Friend</Button>
-      : null}
+        {username ? (
+          friendCheck?.isFriends === "FRIEND" ? (
+            <Button> Remove Friend</Button>
+          ) : friendCheck?.isFriends === "PENDING_ACCEPT" ? (
+            <Button>Friend Request Sent</Button>
+          ) : friendCheck?.isFriends === "PENDING_REQ" ? (
+            <Button
+              onClick={() => {
+                addFriend({ variables: { pendingId: user?._id } });
+              }}
+            >
+              Accept Friend Request
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                addPending({ variables: { username } });
+              }}
+            >
+              {" "}
+              Add Friend
+            </Button>
+          )
+        ) : null}
 
-        <div className="col-12 col-md-10 mb-5">
-
+        <Box className="col-12 col-md-10 mb-5" justifyItems="center">
           <PostList
-
             posts={user?.posts}
-            title={username ? `${user?.username}'s Posts...` : 'Your Posts...'}
+            title={username ? `${user?.username}'s Posts...` : "Your Posts..."}
             showTitle={false}
             showUsername={false}
           />
-        </div>
+        </Box>
         {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
-            style={{ border: '1px dotted #1a1a1a' }}
+            style={{ border: "1px dotted #1a1a1a" }}
           >
-
             <PostForm />
-
           </div>
         )}
       </div>
-    </div>
+    </Box>
   );
 };
 
