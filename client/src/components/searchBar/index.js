@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../../utils/queries";
 import { List, ListItem } from "@chakra-ui/layout";
+import SearchResults from "../SearchResults";
 
 
 const SearchBar = () => {
@@ -27,6 +28,7 @@ const SearchBar = () => {
             label="Search"
           />
         </div>
+        <SearchResults inputText={inputText}/>
       </div>
     );
   };
