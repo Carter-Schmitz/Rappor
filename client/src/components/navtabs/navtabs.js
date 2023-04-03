@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaHome, FaEnvelope } from "react-icons/fa";
+import { FaHome, FaEnvelope, FaUser, FaUsers } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {
-  Box,
   HStack,
-  List,
-  ListItem,
   Flex,
-  Divider,
-  Button,
-  Container,
-  ButtonGroup,
 } from "@chakra-ui/react";
 import "./navtabs.css";
 import Auth from "../../utils/auth";
@@ -21,36 +14,50 @@ function NavTabs({loggedIn}) {
   //console.log("LoggedIn",props.loggedIn)
 
   return (
+    <Flex borderBottom="2px" borderBottomColor="red.600">
+      <HStack className="Nav">
+        <div className="Nav__container">
+          <Link to="/" className="Nav__brand">
+            <img src="logo.svg" className="Nav__logo" alt="logo" />
+          </Link>
 
-    <Flex>
-      <nav className="Nav">
-          <div className="Nav__container">
-            <Link to="/" className="Nav__brand">
-              <img src="logo.svg" className="Nav__logo" />
-            </Link>
-
-            <div className="Nav__bottom">
-              <ul className="Nav__item-wrapper">
-                <li className="Nav__item">
-                  <Link className="Nav__link" to="/me">Profile</Link>
-                </li>
-                <li className="Nav__item">
-                  <Link className="Nav__link" to="/feed">Feed</Link>
-                </li>
-                <li className="Nav__item">
-                {loggedIn ? <Link className="Nav__link" to="/" onClick={Auth.logout}>Logout</Link> 
-                : <Link className="Nav__link" to="/">Login</Link>}
-                </li>
-                <li className="Nav__item">
-                  <Link className="Nav__link" to="/signup">Signup</Link>
-                </li>
-                <li className="Nav__item">
-                  <Link className="Nav__link" to="/friendslist">FriendsList</Link>
-                </li>
-              </ul>
-            </div>
+          <div className="Nav__bottom">
+            <ul className="Nav__item-wrapper">
+              <li className="Nav__item">
+                <Link className="Nav__link" to="/me">
+                  <FaUser />
+                </Link>
+              </li>
+              <li className="Nav__item">
+                <Link className="Nav__link" to="/feed">
+                  <FaHome />
+                </Link>
+              </li>
+              <li className="Nav__item">
+                {loggedIn ? (
+                  <Link className="Nav__link" to="/" onClick={Auth.logout}>
+                    Logout
+                  </Link>
+                ) : (
+                  <Link className="Nav__link" to="/">
+                    Login
+                  </Link>
+                )}
+              </li>
+              <li className="Nav__item">
+                <Link className="Nav__link" to="/signup">
+                  Signup
+                </Link>
+              </li>
+              <li className="Nav__item">
+                <Link className="Nav__link" to="/friendslist">
+                  <FaUsers />
+                </Link>
+              </li>
+            </ul>
           </div>
-        </nav>
+        </div>
+      </HStack>
     </Flex>
   );
 }
