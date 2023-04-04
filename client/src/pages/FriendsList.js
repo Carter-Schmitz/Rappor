@@ -60,7 +60,7 @@ const FriendsList = ({username}) => {
   return (
     <Box align="center">
       <Heading size="lg">Top Ten</Heading>
-      <List borderBottom="1px" borderBottomColor="red.600">
+      <List borderBottom="2px" borderBottomColor="red.600">
         {me?.me?.friends &&
           me?.me?.friends.map((friend) => (
             <TopTen
@@ -71,7 +71,9 @@ const FriendsList = ({username}) => {
             ></TopTen>
           ))}
       </List>
-      <Heading size="md">FriendsList</Heading>
+      <Heading size="md" mt="5">
+        FriendsList
+      </Heading>
       {me?.me?.friends &&
         me?.me?.friends.map((friend) => (
           <FriendArray

@@ -77,7 +77,7 @@ const Feed = () => {
         <HStack justify="space-between">
           <Heading size="lg" color="Black">Start a Rappor</Heading>
           <Button
-            colorScheme="red"
+            colorScheme="orange"
             type="submit"
             color="ivory"
             _hover={{ color: "cyan", transition: "80ms" }}

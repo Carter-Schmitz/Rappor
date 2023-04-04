@@ -5,6 +5,7 @@ import { QUERY_USER, QUERY_USER_SEARCH } from "../../utils/queries";
 import { List, ListItem } from "@chakra-ui/layout";
 import SearchResults from "../SearchResults";
 import { useParams } from 'react-router-dom';
+import { Input } from '@chakra-ui/react';
 
 
 const SearchBar = () => {
@@ -20,7 +21,8 @@ const SearchBar = () => {
     return (
       <div className="main">
         <div className="search">
-          <input
+          <Input
+            maxW="250px"
             id="user-search"
             value={searchValue}
             onChange={inputHandler}
@@ -29,7 +31,7 @@ const SearchBar = () => {
             placeholder="Search for friends..."
           />
         </div>
-        <SearchResults inputText={inputText}/>
+        <SearchResults inputText={inputText} />
       </div>
     );
   };
