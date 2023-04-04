@@ -1,13 +1,14 @@
 import { React, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useQuery } from "@apollo/client";
-import { QUERY_USER } from "../../utils/queries";
+import { QUERY_USER, QUERY_USER_SEARCH } from "../../utils/queries";
 import { List, ListItem } from "@chakra-ui/layout";
 import SearchResults from "../SearchResults";
 
 
 const SearchBar = () => {
   const [inputText, setInputText] = useState("");
+  
   
   let inputHandler = (e) => {
     //convert input text to lower case

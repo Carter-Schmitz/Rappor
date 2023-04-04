@@ -97,3 +97,17 @@ query isFriends($username: String) {
   isFriends(username: $username)
 }
 `;
+
+export const QUERY_USER_SEARCH = gql`
+  query userSearch($username: String!) {
+    userSearch(username: $username) {
+      _id
+      username
+      posts {
+        _id
+        postText
+        createdAt
+      }
+    }
+  }
+`;
