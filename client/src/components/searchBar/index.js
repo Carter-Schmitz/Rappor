@@ -1,29 +1,26 @@
 import { React, useState } from "react";
 import TextField from "@mui/material/TextField";
+import { useQuery } from "@apollo/client";
+import { QUERY_USER } from "../../utils/queries";
+import { List, ListItem } from "@chakra-ui/layout";
+import SearchResults from "../SearchResults";
 
 
-const SearchBar = (props) => {
+const SearchBar = () => {
   const [inputText, setInputText] = useState("");
+  
   let inputHandler = (e) => {
     //convert input text to lower case
-    // Insert Query Here
-    var lowerCase = e.target.value.toLowerCase();
-    setInputText(lowerCase);
-    const filteredData = props.filter((el) => {
-      //if no input the return the original
-      if (props.input === "") {
-        return el;
-      }
-      //return the item which contains the user input
-      else {
-        return el.text.toLowerCase().includes(props.input);
-      }
-    });
+    var input = e.target.value;
+    setInputText(input);
+  };
+
+
     return (
       <div className="main">
         <h1>React Search</h1>
         <div className="search">
-          <TextField
+          <input
             id="outlined-basic"
             onChange={inputHandler}
             variant="outlined"
@@ -31,14 +28,10 @@ const SearchBar = (props) => {
             label="Search"
           />
         </div>
-        <ul>
-          {filteredData.map((item) => (
-            <li key={item.id}>{item.text}</li>
-          ))}
-        </ul>
+        <SearchResults inputText={inputText}/>
       </div>
     );
   };
-};
+
 
 export default SearchBar;

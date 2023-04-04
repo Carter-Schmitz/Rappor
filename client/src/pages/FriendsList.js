@@ -16,7 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaUser, FaEllipsisV } from "react-icons/fa";
-import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
+import { ADD_FRIEND, ADD_PENDING, CHANGE_RANK } from '../utils/mutations';
 import  FriendArray  from "../components/friendArray/index";
 import  TopTen  from "../components/topTen/index";
 
