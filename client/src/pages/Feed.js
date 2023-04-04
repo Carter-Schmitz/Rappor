@@ -82,7 +82,7 @@ const Feed = () => {
           mt="5"
           inputMode="text"
           value={PostText}
-          borderColor="beige"
+          borderColor="red.600"
           placeholder="Create a new Rappor..."
           bg="ivory"
           textColor="black"
