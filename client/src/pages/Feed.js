@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Navigate } from 'react-router-dom';
 import { useMutation, useQuery } from "@apollo/client";
-import { Box, Heading, HStack, Button, Textarea } from "@chakra-ui/react";
+import { Box, Heading, HStack, Button, Textarea, Spinner } from "@chakra-ui/react";
 import TextareaAutosize from "react-textarea-autosize";
 import PostList from "../components/PostList/PostList";
 import { QUERY_FRIENDS_POSTS, QUERY_ME } from '../utils/queries';
@@ -23,15 +23,25 @@ const Feed = () => {
 
 
   const { loading, data: me } = useQuery(QUERY_ME); 
-  //console.log("this is posts",me)
+  //console.log("this is me",me)
+
+  //This is to navigate to login if user isn't logged in
+  if (!Auth.loggedIn()) {
+    return <Navigate to="/" />
+  }
 
   // navigate to personal profile page if username is yours
-      if (!Auth.loggedIn() && !Auth.getProfile().data.username === me?.username) {
+      if (Auth.loggedIn() && Auth.getProfile().data.username === me?.username) {
     return <Navigate to="/feed" />; 
   }
  
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{textAlign:"center", marginTop:"100px"}}><Spinner thickness='4px'
+    speed='0.45s'
+    emptyColor='gray.200'
+    color='orange.500'
+    size='xl'/>
+    </div>;
   }
 
   if (error) {
