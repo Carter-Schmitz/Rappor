@@ -1,0 +1,23 @@
+#search-list {
+    z-index: 2;
+    position: absolute;
+    background-color: #000;
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 3px 3px 6px rgb(228, 91, 22);
+    width: fit-content;
+
+}
+
+.results-item {
+    text-align: center;
+    width: auto;
+    margin: 2px;
+    padding: 3px 20px;
+    border-radius: 3px;
+    transition: font-size 400ms;
+}
+
+.results-item:hover {
+    font-size: 1.4em;
+}

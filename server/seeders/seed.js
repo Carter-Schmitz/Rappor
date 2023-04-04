@@ -34,26 +34,28 @@ db.once("open", async () => {
 
     for (let index = 0; index < allUsers.length; index++) {
       let rank = 0;
-      if (index >= 9 ) {
+      if (index >= 9) {
         rank = index - 9;
-      } 
+      }
 
-      if (allUsers[index].username !== "Bunny" ) {
-        await User.findOneAndUpdate(
-          { username: "Bunny" },
-          {
-            $addToSet: {
-              friends: {
-                friendUsername: allUsers[index].username,
-                friendId: allUsers[index]._id,
-                topTenRank: rank
+      if (allUsers[index].username !== "Bunny") {
+        const regex = new RegExp(/^h/ig)
+        if (!regex.test(allUsers[index].username)) {
+          await User.findOneAndUpdate(
+            { username: "Bunny" },
+            {
+              $addToSet: {
+                friends: {
+                  friendUsername: allUsers[index].username,
+                  friendId: allUsers[index]._id,
+                  topTenRank: rank,
+                },
               },
-            },
-          }
-        );
+            }
+          );
+        }
       }
     }
-
   } catch (err) {
     console.error(err);
     process.exit(1);

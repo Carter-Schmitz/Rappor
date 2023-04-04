@@ -20,7 +20,7 @@
         "password": "password22"
     },
     {
-        "username": "Crane",
+        "username": "Hamster",
         "email": "example5@test.com",
         "password": "password22"
     },
@@ -40,12 +40,12 @@
         "password": "password22"
     },
     {
-        "username": "Doggo",
+        "username": "Harpy Eagle",
         "email": "example9@test.com",
         "password": "password22"
     },
     {
-        "username": "Coyote",
+        "username": "Hare",
         "email": "example10@test.com",
         "password": "password22"
     },
@@ -97,6 +97,11 @@
     {
         "username": "Starfish",
         "email": "example20@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Hammerhead Shark",
+        "email": "example21@test.com",
         "password": "password22"
     }
 ]

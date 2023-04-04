@@ -2,20 +2,22 @@ import React, {useState, useEffect} from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
 
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Heading, Spinner } from '@chakra-ui/react';
 
 
-import PostForm from '../components/PostForm';
-import PostList from '../components/PostList/PostList';
+import PostForm from '../../components/PostForm';
+import PostList from '../../components/PostList/PostList';
 
 
-import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from '../utils/queries';
+import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from '../../utils/queries';
 
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 import { List, ListItem } from '@chakra-ui/layout';
-import TopTen from '../components/topTen';
+import TopTen from '../../components/topTen';
 
-import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
+import { ADD_FRIEND, ADD_PENDING } from '../../utils/mutations';
+
+import "./profile.css"
 
 const Profile = () => {
   const { username } = useParams();
@@ -58,7 +60,12 @@ const Profile = () => {
   }
  
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{textAlign:"center", marginTop:"100px"}}><Spinner thickness='4px'
+    speed='0.45s'
+    emptyColor='gray.200'
+    color='orange.500'
+    size='xl'/>
+    </div>;
   }
 
   if (!Auth.loggedIn()) {
@@ -72,20 +79,12 @@ const Profile = () => {
 
   return (
     <div>
-    <Box align="center" Box maxW="1100px" mx="auto" py="10">
-      <div className="flex-row justify-center mb-3">
-        <Heading className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {username ? `${user?.username}'s` : "your"} profile.
-        </Heading>
-        {!username && (
-          <div
-            className="col-12 col-md-10 mb-3 p-3"
-            // style={{ border: "1px dotted #1a1a1a" }}
-          >
-            <PostForm />
-          </div>
-        )}
-        <List borderBottom="1px" borderBottomColor="red.600">
+    <Box mx="auto" py="10">
+      <div className="mb-3">
+        <div id="aside-box">
+        <aside>
+          <h1>Top 10</h1>
+       <List>
         {me?.me?.friends &&
           me?.me?.friends.map((friend) => (
             <TopTen
@@ -96,7 +95,29 @@ const Profile = () => {
             ></TopTen>
           ))}
       </List>
-
+       </aside>
+       <section>
+       <Heading className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
+          Viewing {username ? `${user?.username}'s` : "your"} profile.
+        </Heading>
+        {!username && (
+          <div
+            className="col-12 col-md-10 mb-3 p-3"
+            // style={{ border: "1px dotted #1a1a1a" }}
+          >
+            <PostForm />
+          </div>
+        )}
+        <Box className="col-12 col-md-10 mb-5" justifyItems="center">
+          <PostList
+            posts={user?.posts}
+            title={username ? `${user?.username}'s Posts...` : "Your Posts..."}
+            showTitle={false}
+            showUsername={false}
+          />
+        </Box>
+       </section>
+      </div>
         {username ? (
           friendCheck?.isFriends === "FRIEND" ? (
             <Button> Remove Friend</Button>
@@ -121,15 +142,6 @@ const Profile = () => {
             </Button>
           )
         ) : null}
-
-        <Box className="col-12 col-md-10 mb-5" justifyItems="center">
-          <PostList
-            posts={user?.posts}
-            title={username ? `${user?.username}'s Posts...` : "Your Posts..."}
-            showTitle={false}
-            showUsername={false}
-          />
-        </Box>
         {/* {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"

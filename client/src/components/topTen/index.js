@@ -27,6 +27,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { CHANGE_RANK } from "../../utils/mutations";
+import "./topTen.css"
 
 const TopTen = ({ username, topTenRank, friendId }) => {
   // going to build modal for selecting rank when the menu item is clicked
@@ -54,23 +55,18 @@ const TopTen = ({ username, topTenRank, friendId }) => {
   if (11 > topTenRank > 0) {
     return (
       <div>
-        <ListItem>
-          <div>{username}</div>
-          <div>Rank: {topTenRank}</div>
+        <ListItem> 
+         <div className="friend-cards">
+          <h2>{username}</h2> 
+          <h4>Rank: {topTenRank}</h4>
           <Menu>
             <MenuButton>{<FaEllipsisH />}</MenuButton>
             <MenuList>
               <MenuItem onClick={() => {}}>Remove Friend</MenuItem>
-              <MenuItem onClick={Modal}>Change Rank</MenuItem>
+              <MenuItem onClick={onOpen}>Change Rank</MenuItem>
             </MenuList>
             <div>
               <>
-                <Button
-                  onClick={onOpen}
-                >
-                  Change Rank
-                </Button>
-
                 <Modal
                   initialFocusRef={initialRef}
                   finalFocusRef={finalRef}
@@ -89,7 +85,7 @@ const TopTen = ({ username, topTenRank, friendId }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                      <Button colorScheme="blue" mr={3} onClick={() => {
+                      <Button colorScheme="orange" mr={3} onClick={() => {
                         submitRank({ variables: { newRank: NewRank, username } })
                          onClose();}}>
                         Save
@@ -101,6 +97,7 @@ const TopTen = ({ username, topTenRank, friendId }) => {
               </>
             </div>
           </Menu>
+        </div>
         </ListItem>
       </div>
     );

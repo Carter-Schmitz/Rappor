@@ -1,6 +1,7 @@
 import { List, ListItem } from "@chakra-ui/layout";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import React, { useState, useEffect } from "react";
+import { Navigate } from 'react-router-dom';
 import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from "../utils/queries";
 import {
   Box,
@@ -14,18 +15,20 @@ import {
   CardFooter,
   IconButton,
   Text,
+  Spinner
 } from "@chakra-ui/react";
 import { FaUser, FaEllipsisV } from "react-icons/fa";
 import { ADD_FRIEND, ADD_PENDING, CHANGE_RANK } from '../utils/mutations';
 import  FriendArray  from "../components/friendArray/index";
 import  TopTen  from "../components/topTen/index";
+import Auth from "../utils/auth"
 
 const FriendsList = ({username}) => {
   const [FriendList, setFriends] = useState("");
 
-  const { data: me } = useQuery(QUERY_ME);
+  const { loading: loadMe, data: me } = useQuery(QUERY_ME);
 
-  const { data: friendCheck } = useQuery(QUERY_IS_FRIENDS, {
+  const { loading: loadFriends, data: friendCheck } = useQuery(QUERY_IS_FRIENDS, {
     variables: { username },
   });
 
@@ -44,6 +47,15 @@ const FriendsList = ({username}) => {
        ],
        awaitRefetchQueries: true
   });
+
+  if (loadFriends || loadMe) {
+    return <div style={{textAlign:"center", marginTop:"100px"}}><Spinner thickness='4px'
+    speed='0.45s'
+    emptyColor='gray.200'
+    color='orange.500'
+    size='xl'/>
+    </div>;
+  }
 
   return (
     <Box align="center">
