@@ -25,7 +25,6 @@ const SearchBar = () => {
             id="outlined-basic"
             onChange={inputHandler}
             variant="outlined"
-            fullWidth
             label="Search"
           />
         </div>

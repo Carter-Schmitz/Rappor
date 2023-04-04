@@ -29,8 +29,8 @@ const Profile = () => {
     variables: { username },
   });
 
-  const user = data?.me || data?.userByUsername || {};
-
+  const user = data?.me || data?.userByUsername;
+  console.log(user)
   const [addPending, { error: pendingError }] = useMutation(ADD_PENDING, { 
     refetchQueries: [
       {query: QUERY_IS_FRIENDS,
@@ -61,7 +61,7 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-  if (!user?.username) {
+  if (!Auth.loggedIn()) {
     return (
       <h4>
         You need to be logged in to see this. Use the navigation links above to
@@ -71,10 +71,11 @@ const Profile = () => {
   }
 
   return (
+    <div>
     <Box align="center" Box maxW="1100px" mx="auto" py="10">
       <div className="flex-row justify-center mb-3">
         <Heading className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {username ? `${user.username}'s` : "your"} profile.
+          Viewing {username ? `${user?.username}'s` : "your"} profile.
         </Heading>
         {!username && (
           <div
@@ -139,6 +140,7 @@ const Profile = () => {
         )} */}
       </div>
     </Box>
+    </div>
   );
 };
 
