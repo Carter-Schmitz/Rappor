@@ -102,3 +102,16 @@ export const ADD_FRIEND = gql`
     }
   }
 `;
+
+export const CHANGE_RANK = gql`
+  mutation changeRank($username: String, $newRank: String) {
+  changeRank(username: $username, newRank: $newRank) {
+    username
+    friends {
+      friendUsername
+      topTenRank
+      friendId
+    }
+  }
+}
+`;
