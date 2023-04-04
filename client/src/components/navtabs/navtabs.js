@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FaHome, FaEnvelope, FaUser, FaUsers } from "react-icons/fa";
+import { FaHome, FaList, FaUser, FaUsers, FaLock, FaLockOpen, FaSignInAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import {
   HStack,
+  VStack,
   Flex,
 } from "@chakra-ui/react";
 import "./navtabs.css";
 import Auth from "../../utils/auth";
+import SearchBar from "../searchBar/index"
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
@@ -15,50 +17,60 @@ function NavTabs({loggedIn}) {
 
   return (
     <Flex borderBottom="2px" borderBottomColor="red.600">
+      
       <HStack className="Nav">
         <div className="Nav__container">
-          <Link to="/" className="Nav__brand">
-            <img src="RapporLogo-removebg-preview.png" id="logo-image" alt="logo" />
+          <Link to="/me" className="Nav__brand">
+            <img src="/RapporLogo-removebg-preview.png" id="logo-image" alt="logo" />
           </Link>
-
+        <VStack width="60%">
           <div className="Nav__bottom">
             <ul className="Nav__item-wrapper">
               <li className="Nav__item">
                 <Link className="Nav__link" to="/me">
                   <FaUser />
+                  Profile
                 </Link>
               </li>
-              <li className="Nav__item">
+              {loggedIn ? <li className="Nav__item">
                 <Link className="Nav__link" to="/feed">
-                  <FaHome />
+                  <FaList />
+                  Feed
                 </Link>
-              </li>
-              <li className="Nav__item">
+              </li>: null}
+              {loggedIn ? <li className="Nav__item">
                 <Link className="Nav__link" to="/friendslist">
                   <FaUsers />
+                  Friends
                 </Link>
-              </li>
+              </li>: null}
               <li className="Nav__item">
                 {loggedIn ? (
                   <Link className="Nav__link" to="/" onClick={Auth.logout}>
+                    <FaLock/>
                     Logout
                   </Link>
                 ) : (
                   <Link className="Nav__link" to="/">
+                    <FaLockOpen/>
                     Login
                   </Link>
                 )}
               </li>
-              <li className="Nav__item">
+              {loggedIn ? null : <li className="Nav__item">
                 <Link className="Nav__link" to="/signup">
+                  <FaSignInAlt/>
                   Signup
                 </Link>
-              </li>
+              </li>}
             </ul>
           </div>
+      {loggedIn ? <SearchBar/> : null}
+      </VStack>
         </div>
       </HStack>
     </Flex>
+
   );
 }
 
