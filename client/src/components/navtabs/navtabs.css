@@ -32,3 +32,8 @@ ul {
     flex-direction: row;
     justify-content: space-evenly;
 }
+
+#logo-image {
+    height: 100px;
+    width: auto;
+}

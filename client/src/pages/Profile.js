@@ -19,6 +19,7 @@ import { ADD_FRIEND, ADD_PENDING } from '../utils/mutations';
 
 const Profile = () => {
   const { username } = useParams();
+  const { data: me } = useQuery(QUERY_ME);
 
   const { loading, data } = useQuery(username ? QUERY_USER : QUERY_ME, {
     variables: { username },
@@ -84,7 +85,17 @@ const Profile = () => {
             <PostForm />
           </div>
         )}
-        <div className="topTen"></div>
+        <List borderBottom="1px" borderBottomColor="red.600">
+        {me?.me?.friends &&
+          me?.me?.friends.map((friend) => (
+            <TopTen
+              key={friend.friendId}
+              username={friend.friendUsername}
+              friendId={friend.friendId}
+              topTenRank={friend.topTenRank}
+            ></TopTen>
+          ))}
+      </List>
 
         {username ? (
           friendCheck?.isFriends === "FRIEND" ? (
