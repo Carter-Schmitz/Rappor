@@ -8,8 +8,8 @@ import { useParams } from 'react-router-dom';
 
 
 const SearchBar = () => {
-  const [inputText, setInputText] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [inputText, setInputText] = useState();
+  const [searchValue, setSearchValue] = useState();
 
   let inputHandler = (e) => {
     //convert input text to lower case
@@ -17,10 +17,18 @@ const SearchBar = () => {
     setInputText(input);
   };
 
+  const resetStates = () => {
+    setInputText()
+    setSearchValue()
+  }
+
     return (
       <div className="main">
         <div className="search">
+          <form>
           <input
+            type="text"
+            onClick={() => { resetStates() }}
             id="user-search"
             value={searchValue}
             onChange={inputHandler}
@@ -28,8 +36,9 @@ const SearchBar = () => {
             label="Search"
             placeholder="Search for friends..."
           />
+        <SearchResults resetStates={resetStates} inputText={inputText}/>
+        </form>
         </div>
-        <SearchResults inputText={inputText}/>
       </div>
     );
   };

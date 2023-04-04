@@ -3,11 +3,12 @@ import { useQuery, useLazyQuery } from "@apollo/client";
 import { QUERY_USER_SEARCH } from "../../utils/queries";
 import { List, ListItem} from "@chakra-ui/layout";
 import "./searchResult.css"
-import { Link } from "react-router-dom";
+import { extendTheme, Button } from "@chakra-ui/react";
+import { Link, Navigate } from "react-router-dom";
 
 
 
-const SearchResults = ({inputText}) => {
+const SearchResults = ({inputText, resetStates}) => {
 
 const { loading: queryCheck, data } = useQuery(QUERY_USER_SEARCH, {
   variables: { username: inputText, limit: 5 },
@@ -31,7 +32,7 @@ const { loading: queryCheck, data } = useQuery(QUERY_USER_SEARCH, {
           if (user?.username) {
             const endpoint = `/profiles/${user?.username}`
             return <ListItem className="results-item" key={user.username}>
-            <Link to={endpoint}>{user.username}</Link>
+            <Link to={endpoint} onClick={resetStates}>{user.username}</Link>
             </ListItem>
           }
         })}
