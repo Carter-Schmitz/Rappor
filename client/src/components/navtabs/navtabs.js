@@ -18,7 +18,7 @@ function NavTabs({loggedIn}) {
       <HStack className="Nav">
         <div className="Nav__container">
           <Link to="/" className="Nav__brand">
-            <img src="logo.svg" className="Nav__logo" alt="logo" />
+            <img src="RapporLogo-removebg-preview.png" id="logo-image" alt="logo" />
           </Link>
 
           <div className="Nav__bottom">
