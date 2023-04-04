@@ -63,7 +63,7 @@ const typeDefs = gql`
     me: User
     friendsPosts: [MultiPost]
     isFriends(username: String): String
-    userSearch(username: String): [User]
+    userSearch(username: String, limit: Int): [User]
   }
 
   type Mutation {

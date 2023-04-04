@@ -78,8 +78,11 @@ const resolvers = {
 
         return "NOT FRIENDS";
       },
-      userSearch: async (parent, { username }) => {
-        return await User.find({username : {$regex : /username/}});
+      userSearch: async (parent, { username, limit }) => {
+        const regEx = new RegExp("^" + username, "gi")
+        const data = await User.find({username : { $in: regEx } });
+
+        return data.slice(0, limit)
       },
     },
 
