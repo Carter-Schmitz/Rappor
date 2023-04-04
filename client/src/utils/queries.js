@@ -10,6 +10,11 @@ export const QUERY_USER = gql`
         postText
         createdAt
       }
+      friends {
+        friendId
+        friendUsername
+        topTenRank
+      }
     }
   }
 `;
