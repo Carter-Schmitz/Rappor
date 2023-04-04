@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const friendSchema = require("./Friend");
 const pendingFriendSchema = require("./pendingFriend");
-const postSchema = require("./Post");
+const postSchema = require("./post");
 
 const userSchema = new Schema({
   username: {
