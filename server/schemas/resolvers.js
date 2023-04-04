@@ -77,7 +77,10 @@ const resolvers = {
         }
 
         return "NOT FRIENDS";
-      }
+      },
+      userSearch: async (parent, { username }) => {
+        return await User.find({username : {$regex : /username/}});
+      },
     },
 
     Mutation: {
