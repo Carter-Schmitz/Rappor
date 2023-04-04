@@ -77,7 +77,9 @@ const Profile = () => {
     );
   }
 
-  let sortedTopTen = [...me?.me.friends];
+  //console.log("80",user?.friends)
+
+  let sortedTopTen = username ? [...user?.friends] : [...me?.me.friends];
 
   sortedTopTen.sort(function(a, b) {
     let keyA = (a.topTenRank);
@@ -108,6 +110,7 @@ const Profile = () => {
               topTenRank={friend.topTenRank}
             ></TopTen>
           ))}
+          sortedTopTen?.length ? null : <h3>No Top Ten Selected</h3>
       </List>
        </aside>
        <section>
