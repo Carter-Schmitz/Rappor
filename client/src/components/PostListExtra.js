@@ -28,7 +28,7 @@ const PostList = ({
       {showTitle && <h3>{title}</h3>}
       {posts &&
         posts.map((post) => (
-          <Card key={post._id} className="card mb-3">
+          <Card key={post._id} className="card mb-3" border="1px" borderColor="red.600">
             <CardHeader className="card-header bg-primary text-light p-2 m-0">
               {showUsername ? (
                 <Link

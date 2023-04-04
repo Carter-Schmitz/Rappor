@@ -46,18 +46,27 @@ const FriendsList = ({username}) => {
   });
 
   return (
-    <Box>
-      <h2>Top Ten</h2>
-      <List>
-      {me?.me?.friends &&
-        me?.me?.friends.map((friend) => (
-          <TopTen key={friend.friendId} username={friend.friendUsername} friendId={friend.friendId} topTenRank={friend.topTenRank}></TopTen>  
-        ))}
+    <Box align="center">
+      <Heading size="lg">Top Ten</Heading>
+      <List borderBottom="1px" borderBottomColor="red.600">
+        {me?.me?.friends &&
+          me?.me?.friends.map((friend) => (
+            <TopTen
+              key={friend.friendId}
+              username={friend.friendUsername}
+              friendId={friend.friendId}
+              topTenRank={friend.topTenRank}
+            ></TopTen>
+          ))}
       </List>
-      <h3>FriendsList</h3>
+      <Heading size="md">FriendsList</Heading>
       {me?.me?.friends &&
         me?.me?.friends.map((friend) => (
-          <FriendArray key={friend.friendId} username={friend.friendUsername} friendId={friend.friendId}></FriendArray>  
+          <FriendArray
+            key={friend.friendId}
+            username={friend.friendUsername}
+            friendId={friend.friendId}
+          ></FriendArray>
         ))}
     </Box>
   );

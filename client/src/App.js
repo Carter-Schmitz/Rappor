@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { setContext } from "@apollo/client/link/context";
 import { ChakraProvider } from "@chakra-ui/react";
 
-import Header from "./components/Header"
+import Header from "./components/Header";
 import SearchBar from "./components/searchBar";
 import NavTabs from "./components/navtabs/navtabs";
 
