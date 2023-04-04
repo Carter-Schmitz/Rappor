@@ -34,6 +34,11 @@ function NavTabs({loggedIn}) {
                 </Link>
               </li>
               <li className="Nav__item">
+                <Link className="Nav__link" to="/friendslist">
+                  <FaUsers />
+                </Link>
+              </li>
+              <li className="Nav__item">
                 {loggedIn ? (
                   <Link className="Nav__link" to="/" onClick={Auth.logout}>
                     Logout
@@ -47,11 +52,6 @@ function NavTabs({loggedIn}) {
               <li className="Nav__item">
                 <Link className="Nav__link" to="/signup">
                   Signup
-                </Link>
-              </li>
-              <li className="Nav__item">
-                <Link className="Nav__link" to="/friendslist">
-                  <FaUsers />
                 </Link>
               </li>
             </ul>

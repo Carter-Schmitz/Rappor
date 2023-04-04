@@ -61,6 +61,7 @@ const PostForm = () => {
                 resize="none"
                 minRows={3}
                 name="PostText"
+                bg="ivory"
                 placeholder="Create a new Post..."
                 value={PostText}
                 className="form-input w-100"
