@@ -18,5 +18,85 @@
         "username": "Hippo",
         "email": "example4@test.com",
         "password": "password22"
+    },
+    {
+        "username": "Crane",
+        "email": "example5@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Sloth",
+        "email": "example6@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Mantis",
+        "email": "example7@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Kevin",
+        "email": "example8@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Doggo",
+        "email": "example9@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Coyote",
+        "email": "example10@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Wolf",
+        "email": "example11@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Whale",
+        "email": "example12@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Tuna",
+        "email": "example13@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Turtle",
+        "email": "example14@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Gorilla",
+        "email": "example15@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Kitty",
+        "email": "example16@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Giraffe",
+        "email": "example17@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Lion",
+        "email": "example18@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Zebra",
+        "email": "example19@test.com",
+        "password": "password22"
+    },
+    {
+        "username": "Starfish",
+        "email": "example20@test.com",
+        "password": "password22"
     }
 ]
