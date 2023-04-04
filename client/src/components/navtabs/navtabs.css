@@ -22,6 +22,7 @@ ul {
 .Nav__bottom{
     display: flex;
     width: 80%;
+    margin-top: 30px;
     flex-direction: row;
     justify-content: space-evenly;
 }

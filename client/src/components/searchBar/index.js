@@ -5,6 +5,7 @@ import { QUERY_USER, QUERY_USER_SEARCH } from "../../utils/queries";
 import { List, ListItem } from "@chakra-ui/layout";
 import SearchResults from "../SearchResults";
 import { useParams } from 'react-router-dom';
+import { Input } from '@chakra-ui/react';
 
 
 const SearchBar = () => {

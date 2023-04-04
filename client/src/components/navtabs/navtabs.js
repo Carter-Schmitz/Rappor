@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaHome, FaList, FaUser, FaUsers, FaLock, FaLockOpen, FaSignInAlt } from "react-icons/fa";
+import { FaList, FaUser, FaUsers, FaLock, FaLockOpen, FaSignInAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router"
 import {
   HStack,
-  VStack,
+  Box,
   Flex,
 } from "@chakra-ui/react";
 import "./navtabs.css";
@@ -20,13 +20,15 @@ function NavTabs({loggedIn}) {
 
   return (
     <Flex borderBottom="2px" borderBottomColor="red.600">
-      
       <HStack className="Nav">
         <div className="Nav__container">
           <Link to="/me" className="Nav__brand">
-            <img src="/RapporLogo-removebg-preview.png" id="logo-image" alt="logo" />
+            <img
+              src="/RapporLogo-removebg-preview.png"
+              id="logo-image"
+              alt="Rappor Logo"
+            />
           </Link>
-        <VStack width="60%">
           <div className="Nav__bottom">
             <ul className="Nav__item-wrapper">
               <li className="Nav__item">
@@ -35,18 +37,22 @@ function NavTabs({loggedIn}) {
                   Profile
                 </Link>
               </li>
-              {loggedIn ? <li className="Nav__item">
-                <Link className="Nav__link" to="/feed">
-                  <FaList />
-                  Feed
-                </Link>
-              </li>: null}
-              {loggedIn ? <li className="Nav__item">
-                <Link className="Nav__link" to="/friendslist">
-                  <FaUsers />
-                  Friends
-                </Link>
-              </li>: null}
+              {loggedIn ? (
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/feed">
+                    <FaList />
+                    Feed
+                  </Link>
+                </li>
+              ) : null}
+              {loggedIn ? (
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/friendslist">
+                    <FaUsers />
+                    Friends
+                  </Link>
+                </li>
+              ) : null}
               <li className="Nav__item">
                 {loggedIn ? (
                   <Link className="Nav__link" onClick={() => {Auth.logout()}}>
@@ -55,25 +61,25 @@ function NavTabs({loggedIn}) {
                   </Link>
                 ) : (
                   <Link className="Nav__link" to="/">
-                    <FaLockOpen/>
+                    <FaLockOpen />
                     Login
                   </Link>
                 )}
               </li>
-              {loggedIn ? null : <li className="Nav__item">
-                <Link className="Nav__link" to="/signup">
-                  <FaSignInAlt/>
-                  Signup
-                </Link>
-              </li>}
+              {loggedIn ? null : (
+                <li className="Nav__item">
+                  <Link className="Nav__link" to="/signup">
+                    <FaSignInAlt />
+                    Signup
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
-      {loggedIn ? <SearchBar/> : null}
-      </VStack>
+          <Box mt="30px">{loggedIn ? <SearchBar /> : null}</Box>
         </div>
       </HStack>
     </Flex>
-
   );
 }
 
