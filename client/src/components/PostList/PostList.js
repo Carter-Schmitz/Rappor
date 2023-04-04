@@ -13,7 +13,7 @@ Heading,
   IconButton,
   Text,
 } from "@chakra-ui/react";
-
+import "./postList.css"
 import { Link } from "react-router-dom";
 
 const PostList = ({ posts, title }) => {
@@ -26,7 +26,8 @@ const PostList = ({ posts, title }) => {
       <h3>{title}</h3>
       {posts &&
         posts.map((post) => (
-          <Card key={post._id}>
+          <div key={post._id} className="post-border">
+            <Card key={post._id}>
             <CardHeader>
               <Flex spacing="4">
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -74,7 +75,8 @@ const PostList = ({ posts, title }) => {
               </Button>
             </CardFooter>
           </Card>
-        ))}
+
+          </div>        ))}
     </Box>
   );
 };
