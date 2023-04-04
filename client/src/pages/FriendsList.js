@@ -57,12 +57,26 @@ const FriendsList = ({username}) => {
     </div>;
   }
 
+  let sortedTopTen = [...me?.me.friends];
+
+  sortedTopTen.sort(function(a, b) {
+    let keyA = (a.topTenRank);
+    let keyB = (b.topTenRank);
+
+    keyA = Number(keyA) 
+    keyB = Number(keyB) 
+    // Compare the 2 ranks
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+  })
+
   return (
     <Box align="center">
       <Heading size="lg">Top Ten</Heading>
       <List borderBottom="1px" borderBottomColor="red.600">
         {me?.me?.friends &&
-          me?.me?.friends.map((friend) => (
+          sortedTopTen.map((friend) => (
             <TopTen
               key={friend.friendId}
               username={friend.friendUsername}
