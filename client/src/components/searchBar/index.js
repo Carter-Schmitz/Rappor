@@ -35,6 +35,7 @@ const SearchBar = () => {
             variant="outlined"
             label="Search"
             placeholder="Search for friends..."
+            autoComplete="off"
           />
         <SearchResults resetStates={resetStates} inputText={inputText}/>
         </form>
