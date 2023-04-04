@@ -51,58 +51,60 @@ const TopTen = ({ username, topTenRank, friendId }) => {
     }
   };
 
-
-  if (11 > topTenRank > 0) {
+  // if (11 < topTenRank && topTenRank > 0 ) {
     return (
       <div>
+        {topTenRank < 11 && topTenRank > 0 &&
         <ListItem> 
-         <div className="friend-cards">
-          <h2>{username}</h2> 
-          <h4>Rank: {topTenRank}</h4>
-          <Menu>
-            <MenuButton>{<FaEllipsisH />}</MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => {}}>Remove Friend</MenuItem>
-              <MenuItem onClick={onOpen}>Change Rank</MenuItem>
-            </MenuList>
-            <div>
-              <>
-                <Modal
-                  initialFocusRef={initialRef}
-                  finalFocusRef={finalRef}
-                  isOpen={isOpen}
-                  onClose={onClose}
-                >
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>Change Rank</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody pb={6}>
-                      <FormControl>
-                        <FormLabel>New Rank</FormLabel>
-                        <Input name="NewRank" onChange={handleChange} placeholder="Rank from 1-10" />
-                      </FormControl>
-                    </ModalBody>
+        <div className="friend-cards">
+         <h2>{username}</h2> 
+         <h4>Rank: {topTenRank}</h4>
+         <Menu>
+           <MenuButton>{<FaEllipsisH />}</MenuButton>
+           <MenuList>
+             <MenuItem onClick={() => {}}>Remove Friend</MenuItem>
+             <MenuItem onClick={onOpen}>Change Rank</MenuItem>
+           </MenuList>
+           <div>
+             <>
+               <Modal
+                 initialFocusRef={initialRef}
+                 finalFocusRef={finalRef}
+                 isOpen={isOpen}
+                 onClose={onClose}
+               >
+                 <ModalOverlay />
+                 <ModalContent>
+                   <ModalHeader>Change Rank</ModalHeader>
+                   <ModalCloseButton />
+                   <ModalBody pb={6}>
+                     <FormControl>
+                       <FormLabel>New Rank</FormLabel>
+                       <Input name="NewRank" onChange={handleChange} placeholder="Rank from 1-10" />
+                     </FormControl>
+                   </ModalBody>
 
-                    <ModalFooter>
-                      <Button colorScheme="orange" mr={3} onClick={() => {
-                        submitRank({ variables: { newRank: NewRank, username } })
-                         onClose();}}>
-                        Save
-                      </Button>
-                      <Button onClick={onClose}>Cancel</Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-              </>
-            </div>
-          </Menu>
-        </div>
-        </ListItem>
+                   <ModalFooter>
+                     <Button colorScheme="orange" mr={3} onClick={() => {
+                       submitRank({ variables: { newRank: NewRank, username } })
+                        onClose();}}>
+                       Save
+                     </Button>
+                     <Button onClick={onClose}>Cancel</Button>
+                   </ModalFooter>
+                 </ModalContent>
+               </Modal>
+             </>
+           </div>
+         </Menu>
+       </div>
+       </ListItem>
+        }
+        
       </div>
     );
-  }
-  return;
+  // }
+  // return;
 };
 
 export default TopTen;

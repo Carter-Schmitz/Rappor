@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaList, FaUser, FaUsers, FaLock, FaLockOpen, FaSignInAlt } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router"
 import {
   HStack,
   Box,
@@ -13,6 +14,8 @@ import SearchBar from "../searchBar/index"
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
 function NavTabs({loggedIn}) {
+
+  const navigate = useNavigate()
   //console.log("LoggedIn",props.loggedIn)
 
   return (
@@ -52,8 +55,8 @@ function NavTabs({loggedIn}) {
               ) : null}
               <li className="Nav__item">
                 {loggedIn ? (
-                  <Link className="Nav__link" to="/" onClick={Auth.logout}>
-                    <FaLock />
+                  <Link className="Nav__link" onClick={() => {Auth.logout()}}>
+                    <FaLock/>
                     Logout
                   </Link>
                 ) : (

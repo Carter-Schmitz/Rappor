@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import { Box, Flex, Card, CardBody, CardHeader, CardFooter, Button, Input, Center } from '@chakra-ui/react';
-
+import { Link, Navigate } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
 import "./login.css"
@@ -24,14 +24,13 @@ const Login = (props) => {
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log("This is for mutation",formState);
     try {
       const { data } = await login({
 
         variables: { email:formState.email, password:formState.password},
       });
-      console.log(data)
-      Auth.login(data.loginUser.token);
+
+      Auth.login(data.loginUser.token)
 
     } catch (e) {
       console.error(e);

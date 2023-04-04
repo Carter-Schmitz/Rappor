@@ -5,7 +5,8 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
+import { Route } from "react-router";
 import { setContext } from "@apollo/client/link/context";
 import { ChakraProvider } from "@chakra-ui/react";
 
@@ -54,15 +55,15 @@ function App() {
       <NavTabs loggedIn={loggedIn}/>
         <>
           <Routes>
-            {loggedIn ? <Route path="/" element={<Navigate to="/feed" />} /> : <Route path="/" element={<Login/>} />}
-            {loggedIn ? <Route path="/feed" element={<Feed/>} /> : <Route path="/feed" element={<Navigate to="/" />} />}
-            {loggedIn ? <Route path="/me" element={<Profile loggedIn={loggedIn} />} /> : <Route path="/me" element={<Navigate to="/" />} />}
-            {loggedIn ? <Route path="/friendsList" element={<FriendsList />} /> : <Route path="/friendsList" element={<Navigate to="/" />} />}
-            {loggedIn ? <Route path="/signup" element={<Navigate to="/me" />} /> : <Route path="/signup" element={<Signup />} />}
+            {loggedIn ? <Route path="/" element={<Feed/>} /> : <Route path="/" element={<Login/>} />}
+            {loggedIn ? <Route path="/feed" element={<Feed/>} /> : <Route path="/feed" element={<Login/>} />}
+            {loggedIn ? <Route path="/me" element={<Profile loggedIn={loggedIn} />} /> : <Route path="/me" element={<Login/>} />}
+            {loggedIn ? <Route path="/friendsList" element={<FriendsList />} /> : <Route path="/friendsList" element={<Login/>} />}
+            {loggedIn ? <Route path="/signup" element={<Profile loggedIn={loggedIn} />} /> : <Route path="/signup" element={<Signup />} />}
             {loggedIn ? <Route path={"/profiles" }>
               <Route path=":username" element={<Profile />}/>
               </Route> 
-            : <Route path="/profiles" element={<Navigate to="/" />} />}
+            : <Route path="/profiles" element={<Login/>} />}
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}

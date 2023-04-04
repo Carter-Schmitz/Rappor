@@ -77,6 +77,22 @@ const Profile = () => {
     );
   }
 
+  //console.log("80",user?.friends)
+
+  let sortedTopTen = username ? [...user?.friends] : [...me?.me.friends];
+
+  sortedTopTen.sort(function(a, b) {
+    let keyA = (a.topTenRank);
+    let keyB = (b.topTenRank);
+
+    keyA = Number(keyA) 
+    keyB = Number(keyB) 
+    // Compare the 2 ranks
+    if (keyA < keyB) return -1;
+    if (keyA > keyB) return 1;
+    return 0;
+  })
+
   return (
     <div>
     <Box mx="auto" py="10">
@@ -86,7 +102,7 @@ const Profile = () => {
           <h1>Top 10</h1>
        <List>
         {me?.me?.friends &&
-          me?.me?.friends.map((friend) => (
+          sortedTopTen.map((friend) => (
             <TopTen
               key={friend.friendId}
               username={friend.friendUsername}
@@ -94,6 +110,7 @@ const Profile = () => {
               topTenRank={friend.topTenRank}
             ></TopTen>
           ))}
+          sortedTopTen?.length ? null : <h3>No Top Ten Selected</h3>
       </List>
        </aside>
        <section>

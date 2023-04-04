@@ -1,8 +1,9 @@
 import decode from 'jwt-decode';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 class AuthService {
+
   getProfile() {
     return decode(this.getToken());
   }
@@ -32,14 +33,14 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  login(idToken) {
+  async login(idToken) {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/feed');
+    window.location.reload()
   }
 
-  logout() {
+  async logout() {
     localStorage.removeItem('id_token');
-    window.location.assign('/')
+    window.location.reload()
   }
 }
 const Auth = new AuthService()
