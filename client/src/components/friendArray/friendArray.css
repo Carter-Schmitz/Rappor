@@ -1,0 +1,7 @@
+.friendcard {
+    margin: 10px;
+    border: 2px solid;
+    box-shadow: 0px 0px 15px #af5500;
+    border-radius: 4px;
+    max-width: 900px;
+}

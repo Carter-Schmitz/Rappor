@@ -4,6 +4,7 @@ import { QUERY_USER, QUERY_ME, QUERY_IS_FRIENDS } from "../../utils/queries";
 import { ADD_FRIEND, ADD_PENDING } from "../../utils/mutations";
 import { Box, Button, Card, CardHeader, Flex, Avatar, Heading, CardBody, CardFooter, IconButton, Text } from "@chakra-ui/react";
 import { FaUser, FaEllipsisV } from "react-icons/fa";
+import "./friendArray.css";
 
 const FriendArray = ({username, friendId}) => {
   const { data: friendCheck } = useQuery(QUERY_IS_FRIENDS, {
@@ -47,11 +48,15 @@ const FriendArray = ({username, friendId}) => {
           </Button>
         )
       ) : null}
-      <Card key={friendId}>
+      <Card
+        key={friendId}
+        className="friendcard"
+        // maxW={900}
+      >
         <CardHeader>
           <Flex spacing="4">
             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-              <Avatar>
+              <Avatar mt={30}>
                 <FaUser />
               </Avatar>
             </Flex>
@@ -63,8 +68,8 @@ const FriendArray = ({username, friendId}) => {
             />
           </Flex>
         </CardHeader>
-        <CardBody>
-          <Text>{username}</Text>
+        <CardBody alignItems="center">
+          <Heading mb={70} size="lg">{username}</Heading>
         </CardBody>
       </Card>
     </div>
