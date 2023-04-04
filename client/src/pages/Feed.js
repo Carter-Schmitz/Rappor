@@ -65,8 +65,13 @@ const Feed = () => {
     <Box maxW="600px" mx="auto" py="10">
       <form onSubmit={handleFormSubmit}>
         <HStack justify="space-between">
-          <Heading size="lg">Start a Rappor</Heading>
-          <Button colorScheme="red" type="submit">
+          <Heading size="lg" color="Black">Start a Rappor</Heading>
+          <Button
+            colorScheme="red"
+            type="submit"
+            color="ivory"
+            _hover={{ color: "cyan", transition: "80ms" }}
+          >
             Post
           </Button>
         </HStack>
@@ -77,8 +82,10 @@ const Feed = () => {
           mt="5"
           inputMode="text"
           value={PostText}
-          borderColor="purple"
+          borderColor="beige"
           placeholder="Create a new Rappor..."
+          bg="ivory"
+          textColor="black"
           minRows={3}
           onChange={handleChange}
         />

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import TextareaAutosize from "react-textarea-autosize";
+import { Box, Heading, Button, Textarea } from "@chakra-ui/react";
 
 import { ADD_POST } from '../utils/mutations';
 import { QUERY_POSTS, QUERY_ME } from '../utils/queries';
@@ -43,37 +45,45 @@ const PostForm = () => {
   };
 
   return (
-    <div>
-      <h3>What's on your mind?</h3>
+    <Box maxW="600px" mx="auto" py="10">
+      <Heading size="md" mb={5}>What's on your mind?</Heading>
 
       {Auth.loggedIn() ? (
         <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
-          >
-            Character Count: {characterCount}/280
-          </p>
           <form
             className="flex-row justify-center justify-space-between-md align-center"
             onSubmit={handleFormSubmit}
           >
             <div className="col-12 col-lg-9">
-              <textarea
+              <Textarea
+                as={TextareaAutosize}
+                borderColor="red"
+                resize="none"
+                minRows={3}
                 name="PostText"
-                placeholder="Here's a new Post..."
+                placeholder="Create a new Post..."
                 value={PostText}
                 className="form-input w-100"
-                style={{ lineHeight: '1.5', resize: 'vertical' }}
                 onChange={handleChange}
-              ></textarea>
+              ></Textarea>
+              <p
+                className={`m-0 ${
+                  characterCount === 280 || error ? "text-danger" : ""
+                }`}
+              >
+                Character Count: {characterCount}/280
+              </p>
             </div>
 
             <div className="col-12 col-lg-3">
-              <button className="btn btn-primary btn-block py-3" type="submit">
+              <Button
+                className="btn btn-primary btn-block py-3"
+                type="submit"
+                bg="red.600"
+                mt={2}
+              >
                 Add Post
-              </button>
+              </Button>
             </div>
             {error && (
               <div className="col-12 my-3 bg-danger text-white p-3">
@@ -84,11 +94,11 @@ const PostForm = () => {
         </>
       ) : (
         <p>
-          You need to be logged in to share your Posts. Please{' '}
+          You need to be logged in to share your Posts. Please{" "}
           <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
         </p>
       )}
-    </div>
+    </Box>
   );
 };
 

@@ -53,17 +53,17 @@ const Login = (props) => {
           <CardHeader
             className="card-header bg-dark text-light p-2"
             textAlign="center"
-            bg="mediumpurple"
+            bg="white"
           >
             Login Here
           </CardHeader>
-          <CardBody className="card-body" bg="mediumpurple">
+          <CardBody className="card-body" bg="white">
             {data ? (
               <p>Success! You may now head to homepage</p>
             ) : (
               <form
                 onSubmit={handleFormSubmit}
-                style={{ background: "mediumpurple" }}
+                style={{ background: "white" }}
               >
                 <Input
                   className="form-input"
@@ -72,7 +72,7 @@ const Login = (props) => {
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
-                  bg="white"
+                  bg="beige"
                 />
                 <Input
                   className="form-input"
@@ -81,15 +81,15 @@ const Login = (props) => {
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
-                  bg="white"
+                  bg="beige"
                 />
-                <Center bg="mediumpurple">
+                <Center bg="white">
                   <Button
                     className="btn btn-block btn-primary"
                     style={{ cursor: "pointer" }}
                     type="submit"
                     bg="red.600"
-                    _hover={{ color: "white", transition: "80ms" }}
+                    _hover={{ color: "cyan", transition: "80ms" }}
                   >
                     Login
                   </Button>
