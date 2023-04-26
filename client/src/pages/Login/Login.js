@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations';
 import { Box, Flex, Card, CardBody, CardHeader, CardFooter, Button, Input, Center } from '@chakra-ui/react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Auth from '../../utils/auth';
 
 import "./login.css"
 
-const Login = (props) => {
+const Login = () => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const alreadyLoggedIn = Auth.loggedIn();
+
+    if (alreadyLoggedIn) {
+      navigate("/feed")
+    }
+  })
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -30,7 +39,18 @@ const Login = (props) => {
         variables: { email:formState.email, password:formState.password},
       });
 
-      Auth.login(data.loginUser.token)
+      const loginSuccess = Auth.login(data.loginUser.token)
+
+      if (loginSuccess === false) {
+        return (
+          <p>
+            <h1>Sorry, something went wrong</h1>
+            <Link to="/">back to the homepage.</Link>
+          </p>
+        )
+      }
+
+      navigate("/feed")
 
     } catch (e) {
       console.error(e);
@@ -59,9 +79,6 @@ const Login = (props) => {
             Login Here
           </CardHeader>
           <CardBody className="card-body" bg="white">
-            {data ? (
-              <p>Success! You may now head to homepage</p>
-            ) : (
               <form
                 onSubmit={handleFormSubmit}
                 style={{ background: "white" }}
@@ -108,7 +125,6 @@ const Login = (props) => {
                   </Button>
                 </Center>
               </form>
-            )}
 
             {error && (
               <div className="my-3 p-3 bg-danger text-white">

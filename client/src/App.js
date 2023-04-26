@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -21,6 +21,7 @@ import FriendsList from "./pages/FriendsList";
 import Signup from "./pages/Signup";
 import Auth from "./utils/auth";
 import "./App.css"
+import Protected from "./components/Protected";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -45,28 +46,50 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const loggedIn = Auth.loggedIn()
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState();
+
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
       <Router>
-      <NavTabs loggedIn={loggedIn}/>
+      <NavTabs/>
         <>
           <Routes>
-            {loggedIn ? <Route path="/" element={<Feed/>} /> : <Route path="/" element={<Login/>} />}
-            {loggedIn ? <Route path="/feed" element={<Feed/>} /> : <Route path="/feed" element={<Login/>} />}
-            {loggedIn ? <Route path="/me" element={<Profile loggedIn={loggedIn} />} /> : <Route path="/me" element={<Login/>} />}
-            {loggedIn ? <Route path="/friendsList" element={<FriendsList />} /> : <Route path="/friendsList" element={<Login/>} />}
-            {loggedIn ? <Route path="/signup" element={<Profile loggedIn={loggedIn} />} /> : <Route path="/signup" element={<Signup />} />}
-            {loggedIn ? <Route path={"/profiles" }>
-              <Route path=":username" element={<Profile />}/>
-              </Route> 
-            : <Route path="/profiles" element={<Login/>} />}
+            <Route index path="/login" element={<Login/>} /> 
+            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/feed" element={
+              <Protected>
+                <Feed/>
+              </Protected>
+            } />
+            <Route path="/me" element={
+              <Protected>
+                <Profile/>
+              </Protected>
+            } />
+            <Route path="/friendsList" element={
+              <Protected>
+                <FriendsList/>
+              </Protected>
+            } />
+            <Route path={"/profiles"} element={
+              <Protected>
+                <Profile/>
+              </Protected>
+            }>
+                <Route path=":username" element={
+                <Protected>
+                  <Profile/>
+                </Protected>
+                } />
+            </Route> 
+
             <Route
               path="*"
-              element={<h1 className="display-2">Wrong page!</h1>}
+              element={<Login/>}
             />
           </Routes>
         </>
