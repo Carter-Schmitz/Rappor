@@ -36,11 +36,10 @@ const Signup = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
 
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: { username: formState.username, email:formState.email, password:formState.password },
       });
 
       Auth.login(data.addUser.token);
@@ -53,7 +52,7 @@ const Signup = () => {
     <Flex
       className="flex-row justify-center mb-4"
       justifyContent="center"
-      mt="200"
+      mt="10"
     >
       <div className="col-12 col-lg-10">
         <Card className="card">
@@ -72,40 +71,57 @@ const Signup = () => {
               </p>
             ) : (
               <form onSubmit={handleFormSubmit} style={{ background: "white" }}>
-                <Input
+                 <Input
+                  variant="something"
                   className="form-input"
-                  placeholder="Your username"
+                  placeholder="Your email"
                   name="username"
                   type="text"
                   value={formState.name}
                   onChange={handleChange}
-                  bg="beige"
+                  bg="#d3d3d3"
+                  border="2px solid #000"
+                  color="#000"
+                  margin="5px"
+                  _hover={{ color: "#fff",border:"2px solid #f8ad67",bg:"#ce7b2e", transition: "80ms" }}
                 />
-                <Input
+                 <Input
+                  variant="something"
                   className="form-input"
                   placeholder="Your email"
                   name="email"
                   type="email"
                   value={formState.email}
                   onChange={handleChange}
-                  bg="beige"
+                  bg="#d3d3d3"
+                  border="2px solid #000"
+                  color="#000"
+                  margin="5px"
+                  _hover={{ color: "#fff",border:"2px solid #f8ad67",bg:"#ce7b2e", transition: "80ms" }}
                 />
-                <Input
+               <Input
+                  variant="something"
                   className="form-input"
                   placeholder="******"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
-                  bg="beige"
+                  bg="#d3d3d3"
+                  border="2px solid #000"
+                  color="#000"
+                  margin="5px"
+                  _hover={{ color: "#fff",border:"2px solid #f8ad67",bg:"#ce7b2e", transition: "80ms" }}
                 />
                 <Center bg="white">
-                  <Button
+                <Button
+                    variant="something"
                     className="btn btn-block btn-primary"
                     style={{ cursor: "pointer" }}
                     type="submit"
-                    bg="red.600"
-                    _hover={{ color: "cyan", transition: "80ms" }}
+                    bg="#dda46f"
+                    color="#000"
+                    _hover={{ color: "#fff",bg:"#ce7b2e", transition: "80ms" }}
                   >
                     Submit
                   </Button>
