@@ -102,27 +102,11 @@ const Profile = () => {
       </List>
        </aside>
        <section>
+       <div id='posts-box-title'>
        <Heading className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
           Viewing {username ? `${user?.username}'s` : "your"} profile.
         </Heading>
-        {!username && (
-          <div
-            className="col-12 col-md-10 mb-3 p-3"
-            // style={{ border: "1px dotted #1a1a1a" }}
-          >
-            <PostForm />
-          </div>
-        )}
-        <Box className="col-12 col-md-10 mb-5" justifyItems="center">
-          <PostList
-            posts={user?.posts}
-            title={username ? `${user?.username}'s Posts...` : "Your Posts..."}
-            showTitle={false}
-            showUsername={false}
-          />
-        </Box>
-       </section>
-      </div>
+        <div>
         {me && username ? (
           friendCheck?.isFriends === "FRIEND" ? (
             <Button> Remove Friend</Button>
@@ -147,14 +131,26 @@ const Profile = () => {
           )
         ) : null
       }
-        {/* {!username && (
+        </div>
+       </div>
+        {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
             // style={{ border: "1px dotted #1a1a1a" }}
           >
             <PostForm />
           </div>
-        )} */}
+        )}
+        <Box className="col-12 col-md-10 mb-5" justifyItems="center">
+          <PostList
+            posts={user?.posts}
+            title={username ? `${user?.username}'s Posts...` : "Your Posts..."}
+            showTitle={false}
+            showUsername={false}
+          />
+        </Box>
+       </section>
+      </div>
       </div>
     </Box>
     </div>
