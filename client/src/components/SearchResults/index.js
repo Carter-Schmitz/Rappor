@@ -1,20 +1,24 @@
-import { React, useState, useEffect } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import React from "react";
+import { useQuery } from "@apollo/client";
 import { QUERY_USER_SEARCH } from "../../utils/queries";
 import { List, ListItem} from "@chakra-ui/layout";
 import "./searchResult.css"
-import { extendTheme, Button } from "@chakra-ui/react";
-import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+const SearchResults = ({ inputText, resetStates }) => {
 
-
-const SearchResults = ({inputText, resetStates}) => {
-
-const { loading: queryCheck, data } = useQuery(QUERY_USER_SEARCH, {
+const { data } = useQuery(QUERY_USER_SEARCH, {
   variables: { username: inputText, limit: 5 },
 });
 
-  //console.log(data)
+  const navigate = useNavigate();
+
+  const handleSearch = (endpoint) => {
+    resetStates()
+
+    navigate(endpoint)
+  }
+
   const users = data?.userSearch;
 
   if (inputText && users) {
@@ -31,15 +35,18 @@ const { loading: queryCheck, data } = useQuery(QUERY_USER_SEARCH, {
         {users.map((user) => {
           if (user?.username) {
             const endpoint = `/profiles/${user?.username}`
+
             return <ListItem className="results-item" key={user.username}>
-            <Link to={endpoint} onClick={resetStates}>{user.username}</Link>
+              <button onClick={() => {handleSearch(endpoint)}}>{user.username}</button>
             </ListItem>
           }
+
+          return null
         })}
       </List>
     );
   }
- 
+
 };
 
 export default SearchResults

@@ -1,37 +1,31 @@
-import { React, useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import { useQuery } from "@apollo/client";
-import { QUERY_USER, QUERY_USER_SEARCH } from "../../utils/queries";
-import { List, ListItem } from "@chakra-ui/layout";
+import { React, useState } from "react";
 import SearchResults from "../SearchResults";
-import { useParams } from 'react-router-dom';
-import { Input } from '@chakra-ui/react';
-
+import "./searchBar.css"
 
 const SearchBar = () => {
-  const [inputText, setInputText] = useState();
-  const [searchValue, setSearchValue] = useState();
+  const [inputText, setInputText] = useState("");
 
   let inputHandler = (e) => {
     //convert input text to lower case
+    console.log('incoming values')
+
     var input =  e.target.value;
     setInputText(input);
   };
 
   const resetStates = () => {
-    setInputText()
-    setSearchValue()
+    console.log('reset values')
+    setInputText("")
   }
 
     return (
       <div className="main">
         <div className="search">
-          <form>
+          <form> 
           <input
             type="text"
-            onClick={() => { resetStates() }}
             id="user-search"
-            value={searchValue}
+            value={inputText}
             onChange={inputHandler}
             variant="outlined"
             label="Search"
