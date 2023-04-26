@@ -32,7 +32,6 @@ const Profile = () => {
   });
 
   const user = data?.me || data?.userByUsername;
-  console.log(user)
   const [addPending, { error: pendingError }] = useMutation(ADD_PENDING, { 
     refetchQueries: [
       {query: QUERY_IS_FRIENDS,
@@ -67,17 +66,6 @@ const Profile = () => {
     size='xl'/>
     </div>;
   }
-
-  if (!Auth.loggedIn()) {
-    return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
-    );
-  }
-
-  //console.log("80",user?.friends)
 
   let sortedTopTen = username ? [...user?.friends] : [...me?.me.friends];
 
@@ -135,7 +123,7 @@ const Profile = () => {
         </Box>
        </section>
       </div>
-        {username ? (
+        {me && username ? (
           friendCheck?.isFriends === "FRIEND" ? (
             <Button> Remove Friend</Button>
           ) : friendCheck?.isFriends === "PENDING_ACCEPT" ? (
@@ -154,11 +142,11 @@ const Profile = () => {
                 addPending({ variables: { username } });
               }}
             >
-              {" "}
               Add Friend
             </Button>
           )
-        ) : null}
+        ) : null
+      }
         {/* {!username && (
           <div
             className="col-12 col-md-10 mb-3 p-3"
