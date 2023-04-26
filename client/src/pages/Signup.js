@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
@@ -24,6 +24,15 @@ const Signup = () => {
     password: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const alreadyLoggedIn = Auth.loggedIn();
+
+    if (alreadyLoggedIn) {
+      navigate("/feed")
+    }
+  })
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +51,18 @@ const Signup = () => {
         variables: { username: formState.username, email:formState.email, password:formState.password },
       });
 
-      Auth.login(data.addUser.token);
+      const loginSuccess = await Auth.login(data.addUser.token);
+
+      if (loginSuccess === false) {
+        return (
+          <p>
+            <h1>Sorry, something went wrong</h1>
+            <Link to="/">back to the homepage.</Link>
+          </p>
+        )
+      }
+
+      navigate('/')
     } catch (e) {
       console.error(e);
     }
@@ -66,7 +86,7 @@ const Signup = () => {
           <CardBody className="card-body" bg="white">
             {data ? (
               <p>
-                Success! You may now head{" "}
+                Success! You may now head
                 <Link to="/">back to the homepage.</Link>
               </p>
             ) : (
@@ -74,7 +94,7 @@ const Signup = () => {
                  <Input
                   variant="something"
                   className="form-input"
-                  placeholder="Your email"
+                  placeholder="Your username"
                   name="username"
                   type="text"
                   value={formState.name}
