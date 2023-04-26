@@ -13,10 +13,20 @@ import SearchBar from "../searchBar/index"
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
-function NavTabs({loggedIn}) {
+function NavTabs() {
+
+  const loggedIn = Auth.loggedIn();
 
   const navigate = useNavigate()
   //console.log("LoggedIn",props.loggedIn)
+
+  const handleLogout = async () => {
+    const logout = await Auth.logout();
+
+    if (logout === true) {
+      navigate("/login")
+    }
+  }
 
   return (
     <Flex borderBottom="2px" borderBottomColor="red.600">
@@ -31,12 +41,15 @@ function NavTabs({loggedIn}) {
           </Link>
           <div className="Nav__bottom">
             <ul className="Nav__item-wrapper">
+              {loggedIn ? 
               <li className="Nav__item">
-                <Link className="Nav__link" to="/me">
-                  <FaUser />
-                  Profile
-                </Link>
-              </li>
+              <Link className="Nav__link" to="/me">
+                <FaUser />
+                Profile
+              </Link>
+            </li>
+            : null
+            }
               {loggedIn ? (
                 <li className="Nav__item">
                   <Link className="Nav__link" to="/feed">
@@ -55,7 +68,7 @@ function NavTabs({loggedIn}) {
               ) : null}
               <li className="Nav__item">
                 {loggedIn ? (
-                  <Link className="Nav__link" onClick={() => {Auth.logout()}}>
+                  <Link className="Nav__link" onClick={handleLogout}>
                     <FaLock/>
                     Logout
                   </Link>
