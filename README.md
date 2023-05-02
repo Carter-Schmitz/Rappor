@@ -15,6 +15,8 @@
   ## Description 
   A MERN Stack social media to revamp and revive some old classic features. Rank your friends in a topten list, interact with posts by only downvoting. Rappor is a truly unique social media experience.
 
+  ## Screenshot: ![Capture](https://user-images.githubusercontent.com/113850230/235564906-abd2de0e-a008-49b7-ad4d-e2ef38e67549.PNG)
+
   ## Installation 
   N/A
 
